@@ -70,7 +70,7 @@ in
 
 
         </div>
-        <h2>1. The Equals Tilde</h2>
+        <h3>1. The Equals Tilde</h3>
 
 <p>What&rsquo;s an equalstilde, you say? Who would come up with such a dumb sounding name for an operator? It actually lies at the foundation of Ruby regular expressions. It allows you to apply a regular expression to a string, and returns the index within the string where the regular expression matches. For example,</p>
 
@@ -79,7 +79,7 @@ in
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>2. Matchdata</h2>
+<h3>2. Matchdata</h3>
 
 <p>Instead of using the equalstilde, you can also use a string method called match to apply a regular expression to a string. However, instead of returning an index, it returns this weird type of object called MatchData:</p>
 
@@ -90,7 +90,7 @@ in
 
 <p>Cool, so then what do you do with a MatchData object? It all makes sense when you learn about this crazy thing called&hellip;</p>
 
-<h2>3. Capture groups</h2>
+<h3>3. Capture groups</h3>
 
 <p>Get ready to have your mind blown. In Ruby, if you use parenthesis in a regular expression, you can utilize capture groups. You can extract multiple parts from a string without using multiple regular expressions, just by putting the part of the string you want to capture. Get out, I know. It&rsquo;s awesome. For example,</p>
 
@@ -136,7 +136,7 @@ in
 
 <p></p>
 
-<h2>4. Atomic Grouping</h2>
+<h3>4. Atomic Grouping</h3>
 
 <p>An atomic group is a type of capture group. When the regex engine exits it, all backtracking positions are discarded. Let&rsquo;s go over two cases, one that uses atomic grouping, and one that doesn&rsquo;t, and see how the regex engine would operate.</p>
 
@@ -154,7 +154,7 @@ in
 
 <p>In this case, again, the \A is matched as the start of the string, and then the engine tries to match &ldquo;Tommy&rdquo;. It succeeds and moves onto matching \z, which fails. Because of the atomic grouping, the engine has thrown out all back tracing data upon reaching the \z, and therefore fails after only trying to match &ldquo;Tommy&rdquo; rather than all three options in the capture group.</p>
 
-<h2>5. Subexpression Calls</h2>
+<h3>5. Subexpression Calls</h3>
 
 <p>Okay. Okay. This one is probably the most radical thing about regular expressions.</p>
 
@@ -198,7 +198,7 @@ in
 
 <p>Note that the * following \g<paren> is extremely important. This allows the regular expression to break out of recursion, since the subexpression can exist 0 or many times. Without it, the recursion would be never ending.</p>
 
-<h2>6. Lookahead and lookbehind assertions</h2>
+<h3>6. Lookahead and lookbehind assertions</h3>
 
 <p>What if you want to make sure certain characters exist in a regular expression, but you don&rsquo;t want them to be part of your match group? This is when you would want to use a special type of anchor, called lookahead and lookbeind assertions.</p>
 

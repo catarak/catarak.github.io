@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Ear to the Bits]]></title>
   <link href="http://catarak.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://catarak.github.io/"/>
-  <updated>2014-10-13T13:34:52-04:00</updated>
+  <updated>2014-10-13T14:13:01-04:00</updated>
   <id>http://catarak.github.io/</id>
   <author>
     <name><![CDATA[Cassie Tarakajian]]></name>
@@ -18,7 +18,7 @@
     <link href="http://catarak.github.io/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/"/>
     <updated>2014-10-13T12:03:23-04:00</updated>
     <id>http://catarak.github.io/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever</id>
-    <content type="html"><![CDATA[<h2>1. The Equals Tilde</h2>
+    <content type="html"><![CDATA[<h3>1. The Equals Tilde</h3>
 
 <p>What&rsquo;s an equalstilde, you say? Who would come up with such a dumb sounding name for an operator? It actually lies at the foundation of Ruby regular expressions. It allows you to apply a regular expression to a string, and returns the index within the string where the regular expression matches. For example,</p>
 
@@ -26,7 +26,7 @@
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/Lisa/</span> <span class="o">=~</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">You</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">re</span> <span class="n">tearing</span> <span class="n">me</span> <span class="n">apart</span><span class="p">,</span> <span class="no">Lisa</span><span class="o">!&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="c1">#=&gt; 25</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<h2>2. Matchdata</h2>
+<h3>2. Matchdata</h3>
 
 <p>Instead of using the equalstilde, you can also use a string method called match to apply a regular expression to a string. However, instead of returning an index, it returns this weird type of object called MatchData:</p>
 
@@ -36,7 +36,7 @@
 
 <p>Cool, so then what do you do with a MatchData object? It all makes sense when you learn about this crazy thing called&hellip;</p>
 
-<h2>3. Capture groups</h2>
+<h3>3. Capture groups</h3>
 
 <p>Get ready to have your mind blown. In Ruby, if you use parenthesis in a regular expression, you can utilize capture groups. You can extract multiple parts from a string without using multiple regular expressions, just by putting the part of the string you want to capture. Get out, I know. It&rsquo;s awesome. For example,</p>
 
@@ -88,7 +88,7 @@
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span><span class="o">[</span><span class="n">sexy_item_1</span><span class="o">]</span> <span class="c1"># =&gt; &amp;ldquo;candles&amp;rdquo;</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
-<h2>4. Atomic Grouping</h2>
+<h3>4. Atomic Grouping</h3>
 
 <p>An atomic group is a type of capture group. When the regex engine exits it, all backtracking positions are discarded. Let&rsquo;s go over two cases, one that uses atomic grouping, and one that doesn&rsquo;t, and see how the regex engine would operate.</p>
 
@@ -104,7 +104,7 @@
 
 <p>In this case, again, the \A is matched as the start of the string, and then the engine tries to match &ldquo;Tommy&rdquo;. It succeeds and moves onto matching \z, which fails. Because of the atomic grouping, the engine has thrown out all back tracing data upon reaching the \z, and therefore fails after only trying to match &ldquo;Tommy&rdquo; rather than all three options in the capture group.</p>
 
-<h2>5. Subexpression Calls</h2>
+<h3>5. Subexpression Calls</h3>
 
 <p>Okay. Okay. This one is probably the most radical thing about regular expressions.</p>
 
@@ -157,7 +157,7 @@
 
 <p>Note that the * following \g<paren> is extremely important. This allows the regular expression to break out of recursion, since the subexpression can exist 0 or many times. Without it, the recursion would be never ending.</p>
 
-<h2>6. Lookahead and lookbehind assertions</h2>
+<h3>6. Lookahead and lookbehind assertions</h3>
 
 <p>What if you want to make sure certain characters exist in a regular expression, but you don&rsquo;t want them to be part of your match group? This is when you would want to use a special type of anchor, called lookahead and lookbeind assertions.</p>
 
@@ -174,9 +174,9 @@
 <p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#109;&amp;#x61;&amp;#x69;&amp;#x6c;&amp;#x74;&amp;#x6f;&amp;#58;&amp;#109;&amp;#97;&amp;#114;&amp;#107;&amp;#x40;&amp;#116;&amp;#104;&amp;#101;&amp;#x72;&amp;#x6f;&amp;#111;&amp;#109;&amp;#x2e;&amp;#99;&amp;#111;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#109;&amp;#x61;&amp;#x72;&amp;#107;&amp;#64;&amp;#x74;&amp;#x68;&amp;#x65;&amp;#x72;&amp;#x6f;&amp;#111;&amp;#109;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#109;&lt;/a&gt;&amp;rdquo;.match(/.&lt;em&gt;(?=@theroom.com)/) # =&gt; #&lt;MatchData &quot;mark&quot;&gt;</span>
-</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#x61;&amp;#105;&amp;#108;&amp;#116;&amp;#x6f;&amp;#x3a;&amp;#x6a;&amp;#111;&amp;#x68;&amp;#x6e;&amp;#x6e;&amp;#x79;&amp;#64;&amp;#116;&amp;#104;&amp;#x65;&amp;#x72;&amp;#111;&amp;#x6f;&amp;#x6d;&amp;#x2e;&amp;#99;&amp;#111;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#106;&amp;#x6f;&amp;#x68;&amp;#x6e;&amp;#110;&amp;#x79;&amp;#64;&amp;#x74;&amp;#104;&amp;#x65;&amp;#x72;&amp;#x6f;&amp;#111;&amp;#109;&amp;#x2e;&amp;#x63;&amp;#111;&amp;#x6d;&lt;/a&gt;&amp;rdquo;.match(/.&lt;/em&gt;(?=theroom.com)/) # =&gt; #&lt;MatchData &quot;johnny&quot;&gt;</span>
-</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#109;&amp;#97;&amp;#x69;&amp;#108;&amp;#x74;&amp;#111;&amp;#58;&amp;#109;&amp;#x69;&amp;#99;&amp;#x68;&amp;#97;&amp;#101;&amp;#x6c;&amp;#x40;&amp;#x74;&amp;#x72;&amp;#x6f;&amp;#x6c;&amp;#x6c;&amp;#50;&amp;#x2e;&amp;#99;&amp;#111;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#109;&amp;#105;&amp;#x63;&amp;#x68;&amp;#97;&amp;#101;&amp;#108;&amp;#64;&amp;#x74;&amp;#114;&amp;#x6f;&amp;#108;&amp;#x6c;&amp;#50;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#x6d;&lt;/a&gt;&amp;rdquo;.match(/.*(?=theroom.com)/) # =&gt; nil</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#x61;&amp;#x69;&amp;#108;&amp;#116;&amp;#111;&amp;#x3a;&amp;#x6d;&amp;#97;&amp;#114;&amp;#x6b;&amp;#x40;&amp;#116;&amp;#x68;&amp;#101;&amp;#114;&amp;#111;&amp;#111;&amp;#109;&amp;#46;&amp;#x63;&amp;#111;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#x6d;&amp;#x61;&amp;#114;&amp;#x6b;&amp;#x40;&amp;#116;&amp;#x68;&amp;#x65;&amp;#114;&amp;#111;&amp;#111;&amp;#109;&amp;#46;&amp;#99;&amp;#x6f;&amp;#109;&lt;/a&gt;&amp;rdquo;.match(/.&lt;em&gt;(?=@theroom.com)/) # =&gt; #&lt;MatchData &quot;mark&quot;&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#109;&amp;#97;&amp;#x69;&amp;#108;&amp;#116;&amp;#x6f;&amp;#58;&amp;#106;&amp;#x6f;&amp;#104;&amp;#x6e;&amp;#110;&amp;#x79;&amp;#x40;&amp;#116;&amp;#x68;&amp;#x65;&amp;#114;&amp;#111;&amp;#111;&amp;#x6d;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#x6a;&amp;#x6f;&amp;#104;&amp;#x6e;&amp;#x6e;&amp;#121;&amp;#64;&amp;#x74;&amp;#104;&amp;#101;&amp;#x72;&amp;#x6f;&amp;#111;&amp;#x6d;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;&amp;rdquo;.match(/.&lt;/em&gt;(?=theroom.com)/) # =&gt; #&lt;MatchData &quot;johnny&quot;&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#97;&amp;#105;&amp;#108;&amp;#x74;&amp;#x6f;&amp;#x3a;&amp;#x6d;&amp;#105;&amp;#99;&amp;#104;&amp;#x61;&amp;#101;&amp;#x6c;&amp;#64;&amp;#x74;&amp;#114;&amp;#x6f;&amp;#x6c;&amp;#108;&amp;#50;&amp;#x2e;&amp;#99;&amp;#x6f;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#109;&amp;#x69;&amp;#x63;&amp;#104;&amp;#x61;&amp;#x65;&amp;#108;&amp;#x40;&amp;#116;&amp;#114;&amp;#111;&amp;#x6c;&amp;#x6c;&amp;#x32;&amp;#x2e;&amp;#99;&amp;#x6f;&amp;#109;&lt;/a&gt;&amp;rdquo;.match(/.*(?=theroom.com)/) # =&gt; nil</span>
 </span></code></pre></td></tr></table></div></figure></p>
 
 <h2>Other References</h2>
