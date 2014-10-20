@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+
+<head>
+
+
+<meta charset="utf-8">
+<meta http-equiv="cleartype" content="on">
+
+<title>6 Things About Ruby Regular Expressions That Will Change Your Life Forever - Ear to the Bits</title>
+<meta name="author" content="Cassie Tarakajian">
+
+
+
+
+<meta name="description" content="Cassie Tarakajian here. Greenpoint, Brooklyn resident, full-stack enthusiast, from the bits to the cloud.">
+
+<meta name="keywords" content="flatiron school regular expressions ruby ">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Twitter Cards -->
+
+  
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content"">
+  
+  <meta name="twitter:title" content="6 Things about Ruby Regular Expressions That Will Change Your Life Forever">
+  <meta name="twitter:description" content="Cassie Tarakajian here. Greenpoint, Brooklyn resident, full-stack enthusiast, from the bits to the cloud.">
+  <meta name="twitter:creator" content="@hellothisiscass">
+
+
+<!-- Open Graph -->
+<meta property="og:local" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://catarak.github.io/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever">
+<meta property="og:title" content="6 Things about Ruby Regular Expressions That Will Change Your Life Forever">
+<meta property="og:description" content="Cassie Tarakajian here. Greenpoint, Brooklyn resident, full-stack enthusiast, from the bits to the cloud.">
+
+  <meta property="og:image" content="">
+
+<meta property="og:site_name" content="Ear to the Bits">
+
+<link rel="canonical" href="http://catarak.github.io/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever">
+<link href="/favicon.png" rel="icon">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/atom.xml" rel="alternate" title="Ear to the Bits" type="application/atom+xml">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+
+
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="images/avatar-cassie.png" alt="Cassie Tarakajian photo" class="author-photo">
+					<h4>Cassie Tarakajian</h4>
+					<p></p>
+				</li>
+				<li><a href="//www.cassietarakajian.com">Learn More</a></li>
+				
+				<li>
+					<a href="http://twitter.com/hellothisiscass"><i class="fa fa-twitter"></i> Twitter</a>
+				</li>
+				
+				<li>
+					<a href="http://github.com/catarak"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="/posts/">All Posts</a></li>
+				<li><a href="/categories/">All Categories</a></li>
+			</ul>
+		</li>
+		
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/" rel="bookmark" title="6 Things about Ruby Regular Expressions That Will Change Your Life Forever">6 Things about Ruby Regular Expressions That Will Change Your Life Forever</a></h1>
+        
+        <h2>October 13, 2014</h2>
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <h3>1. The Equals Tilde</h3>
+
+<p>What&rsquo;s an equalstilde, you say? Who would come up with such a dumb sounding name for an operator? It actually lies at the foundation of Ruby regular expressions. It allows you to apply a regular expression to a string, and returns the index within the string where the regular expression matches. For example,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/Lisa/</span> <span class="o">=~</span> <span class="s2">&quot;You&#39;re tearing me apart, Lisa!&quot;</span> <span class="c1">#=&gt; 25</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2. Matchdata</h3>
+
+<p>Instead of using the equalstilde, you can also use a string method called match to apply a regular expression to a string. However, instead of returning an index, it returns this weird type of object called MatchData:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;You&#39;re tearing me apart, Lisa!&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/Lisa/</span><span class="p">)</span> <span class="c1">#=&gt; #&lt;MatchData &quot;Lisa&quot;&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cool, so then what do you do with a MatchData object? It all makes sense when you learn about this crazy thing called&hellip;</p>
+
+<h3>3. Capture groups</h3>
+
+<p>Get ready to have your mind blown. In Ruby, if you use parenthesis in a regular expression, you can utilize capture groups. You can extract multiple parts from a string without using multiple regular expressions, just by putting the part of the string you want to capture. Get out, I know. It&rsquo;s awesome. For example,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;I mean, the candles, the music, the sexy dress... </span>
+</span><span class='line'><span class="s2">       what&#39;s going on here?&quot;&quot;&quot;</span>
+</span><span class='line'><span class="n">m</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/the (.*), the (.*), the (.*)\.\.\./</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;the candles, the music, the sexy dress...&quot; </span>
+</span><span class='line'><span class="c1"># 1:&quot;candles&quot; 2:&quot;music&quot; 3:&quot;sexy dress&quot;&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, you can access each of the capture groups separately, like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="c1"># =&gt; &quot;the candles, the music, the sexy dress...&quot;</span>
+</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="c1"># =&gt; &quot;candles&quot; </span>
+</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="c1"># =&gt; &quot;music&quot;</span>
+</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="c1"># =&gt; &quot;sexy dress&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can even name your capture groups:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;I mean, the candles, the music, the sexy dress... </span>
+</span><span class='line'><span class="s2">       what&#39;s going on here?&quot;&quot;&quot;</span>
+</span><span class='line'><span class="n">m</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/the (?&lt;sexy_item_1&gt;.*), the (?&lt;sexy_item_2&gt;.*), the (?&lt;sexy_item_3&gt;.*)\.\.\./</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;the candles, the music, the sexy dress...&quot; </span>
+</span><span class='line'><span class="c1"># 1:&quot;candles&quot; 2:&quot;music&quot; 3:&quot;sexy dress&quot;&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you can access each group using hash syntax:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span><span class="o">[</span><span class="n">sexy_item_1</span><span class="o">]</span> <span class="c1"># =&gt; &quot;candles&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h3>4. Atomic Grouping</h3>
+
+<p>An atomic group is a type of capture group. When the regex engine exits it, all backtracking positions are discarded. Let&rsquo;s go over two cases, one that uses atomic grouping, and one that doesn&rsquo;t, and see how the regex engine would operate.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;Tommy Wiseau&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/\A(Tommy|Thomas|Tom)\z/</span><span class="p">)</span> <span class="c1"># =&gt; nil </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The regex engine first matches the start of the string, \A, and then matches &ldquo;Tommy&rdquo;. However, since it then would leave the capture group and try to match the \z, or the end of a string, the match would fail. The engine would then go back and try to match Thomas, and fail, try to match Tom, and ultimately stop and declare failure. But say we want to shorten this process.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;Tommy Wiseau&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/\A(?&gt;Tommy|Thomas|Tom)\z/</span><span class="p">)</span> <span class="c1"># =&gt; nil</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this case, again, the \A is matched as the start of the string, and then the engine tries to match &ldquo;Tommy&rdquo;. It succeeds and moves onto matching \z, which fails. Because of the atomic grouping, the engine has thrown out all back tracing data upon reaching the \z, and therefore fails after only trying to match &ldquo;Tommy&rdquo; rather than all three options in the capture group.</p>
+
+<h3>5. Subexpression Calls</h3>
+
+<p>Okay. Okay. This one is probably the most radical thing about regular expressions.</p>
+
+<p>By using the \g<name> syntax, you can match a previously named subexpression, which can be a group name or number. An example better demonstrates how you use it.</p>
+
+<p>Say that you want to make sure all parenthesis surrounding a string are always balanced. You would use something like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;(spoons)&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;\([^()]*\g&lt;paren&gt;*\))/</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;(spoons)&quot; paren:&quot;(spoons)&quot;&gt; </span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&quot;((spoons))&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;\([^()]*\g&lt;paren&gt;*\))/</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;((spoons))&quot; paren:&quot;((spoons))&quot;&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&quot;((spoons)&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;\([^()]*\g&lt;paren&gt;*\))/</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;&quot; paren:nil&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cool. Pretty cool. Let&rsquo;s go over what the regex engine does.</p>
+
+<ol>
+<li>Enter a capture group named <em>paren</em>.</li>
+<li>Match a literal <em>(</em>.</li>
+<li>Match the text in between the parenthesis that is anything except for parenthesis.</li>
+<li>Call the <em>paren</em> capture group again, dropping the part in the middle of the parentheses for now.</li>
+<li>Enter the <em>paren</em> capture group again</li>
+<li>Match a literal <em>(</em>, the second character in the group</li>
+<li>Match the text in between the parenthesis that is anything except for parenthesis.</li>
+<li>Try to call <em>paren</em> again, but fail since it would cause the match thus far to fail.</li>
+<li>Match a literal <em>)</em> n times, where n is the depth of the recursion.</li>
+</ol>
+
+
+<p>Note that the * following \g<paren> is extremely important. This allows the regular expression to break out of recursion, since the subexpression can exist 0 or many times. Without it, the recursion would be never ending.</p>
+
+<h3>6. Lookahead and lookbehind assertions</h3>
+
+<p>What if you want to make sure certain characters exist in a regular expression, but you don&rsquo;t want them to be part of your match group? This is when you would want to use a special type of anchor, called lookahead and lookbeind assertions.</p>
+
+<ul>
+<li><em>(?=pat)</em> is a positive lookahead assertion, and ensures that the characters following your expression match &ldquo;pat&rdquo;</li>
+<li><em>(?!pat)</em> is a negative lookahead assertion, and ensures that the characters following your expression do not match &ldquo;pat&rdquo;</li>
+<li><em>(?&lt;=pat)</em> is a positive lookbehind assertion, and ensures that the characters preceeding your expression match &ldquo;pat&rdquo;</li>
+<li><em>(?&lt;!pat)</em> is a negative lookbehind assertion, and ensures that the characters preceeding your expression do not match &ldquo;pat&rdquo;</li>
+</ul>
+
+
+<p>Pretty fantastic, right? For example, say you have a list of emails, and you&rsquo;re trying to find the usernames of all of the ones at a certain domain:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;mark@theroom.com&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/.*(?=@theroom.com)/</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;mark&quot;&gt; </span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&quot;johnny@theroom.com&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/.*(?=theroom.com)/</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;johnny&quot;&gt; </span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&quot;michael@troll2.com&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/.*(?=theroom.com)/</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; nil</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Other References</h2>
+
+<p>If there&rsquo;s still more you want to know about regular expressions in Ruby, I recommend looking at the <a href="http://www.ruby-doc.org/core-2.1.3/Regexp.html">Ruby Docs</a> or visiting the webstite <a href="http://www.regular-expressions.info/">Regular-Expressions.info</a>, which contains more than you&rsquo;d ever want to know about regular expressions. In the best way possible.</p>
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="/categories/#flatiron school" title="Pages tagged flatiron school" class="tag">flatiron school</a><a href="/categories/#regular expressions" title="Pages tagged regular expressions" class="tag">regular expressions</a><a href="/categories/#ruby" title="Pages tagged ruby" class="tag">ruby</a></span>
+        <span><a href="/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/" rel="bookmark" title="6 Things about Ruby Regular Expressions That Will Change Your Life Forever">6 Things about Ruby Regular Expressions That Will Change Your Life Forever</a> was published on <span class="entry-date date published updated"><time datetime="2014-10-13T12:03:23-04:00">October 13, 2014</time></span></span>
+        
+        <span class="author vcard"><span class="fn"><a href="" title="About Cassie Tarakajian">Cassie Tarakajian</a></span></span>
+        
+      </footer>
+    </div><!-- /.entry-content -->
+    
+      <div class="read-more">
+        
+          <div class="read-more-header">
+            <a href="/blog/2014/04/22/a-sample-post/" class="btn">Read More</a>
+          </div><!-- /.read-more-header -->
+          <div class="read-more-content">
+            <h3><a href="/blog/2014/04/22/a-sample-post/" title="This is a sample post">This is a sample post</a></h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad &hellip;&hellip; <a href="/blog/2014/04/22/a-sample-post/"> Continue reading</a></p>
+          </div><!-- /.read-more-content -->
+        
+        <div class="read-more-list">
+          
+        </div><!-- /.read-more-list -->
+      </div><!-- /.read-more -->
+    
+    
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2014 Cassie Tarakajian. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/Z1MM32M4N/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+
+	        
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/javascripts/octopress.js" type="text/javascript"></script>
+<script src="/javascripts/scripts.min.js"></script>
+
+
+
+
+
+	        
+
+</body>
+</html>

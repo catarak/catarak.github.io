@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Regular Expressions | Ear to the Bits]]></title>
+  <link href="http://catarak.github.io/blog/categories/regular-expressions/atom.xml" rel="self"/>
+  <link href="http://catarak.github.io/"/>
+  <updated>2014-10-20T00:33:59-04:00</updated>
+  <id>http://catarak.github.io/</id>
+  <author>
+    <name><![CDATA[Cassie Tarakajian]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[6 Things About Ruby Regular Expressions That Will Change Your Life Forever]]></title>
+    <link href="http://catarak.github.io/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/"/>
+    <updated>2014-10-13T12:03:23-04:00</updated>
+    <id>http://catarak.github.io/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever</id>
+    <content type="html"><![CDATA[<h3>1. The Equals Tilde</h3>
+
+<p>What&rsquo;s an equalstilde, you say? Who would come up with such a dumb sounding name for an operator? It actually lies at the foundation of Ruby regular expressions. It allows you to apply a regular expression to a string, and returns the index within the string where the regular expression matches. For example,</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/Lisa/</span> <span class="o">=~</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">You</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">re</span> <span class="n">tearing</span> <span class="n">me</span> <span class="n">apart</span><span class="p">,</span> <span class="no">Lisa</span><span class="o">!&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="c1">#=&gt; 25</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>2. Matchdata</h3>
+
+<p>Instead of using the equalstilde, you can also use a string method called match to apply a regular expression to a string. However, instead of returning an index, it returns this weird type of object called MatchData:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">You</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">re</span> <span class="n">tearing</span> <span class="n">me</span> <span class="n">apart</span><span class="p">,</span> <span class="no">Lisa</span><span class="o">!&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/Lisa/</span><span class="p">)</span> <span class="c1">#=&gt; #&lt;MatchData &quot;Lisa&quot;&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Cool, so then what do you do with a MatchData object? It all makes sense when you learn about this crazy thing called&hellip;</p>
+
+<h3>3. Capture groups</h3>
+
+<p>Get ready to have your mind blown. In Ruby, if you use parenthesis in a regular expression, you can utilize capture groups. You can extract multiple parts from a string without using multiple regular expressions, just by putting the part of the string you want to capture. Get out, I know. It&rsquo;s awesome. For example,</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">I</span> <span class="n">mean</span><span class="p">,</span> <span class="n">the</span> <span class="n">candles</span><span class="p">,</span> <span class="n">the</span> <span class="n">music</span><span class="p">,</span> <span class="n">the</span> <span class="n">sexy</span> <span class="n">dress</span><span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span>
+</span><span class='line'>       <span class="n">what</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">s</span> <span class="n">going</span> <span class="n">on</span> <span class="n">here?</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="n">m</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/the (.&lt;em&gt;), the (.&lt;/em</span><span class="o">&gt;</span><span class="p">),</span> <span class="n">the</span> <span class="p">(</span><span class="o">.</span><span class="n">*</span><span class="p">)</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">/</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;h1&gt;=&gt; #&amp;lt;MatchData &amp;ldquo;the candles, the music, the sexy dress&amp;hellip;&amp;rdquo;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="mi">1</span><span class="ss">:&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">candles</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="mi">2</span><span class="ss">:&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">music</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="mi">3</span><span class="ss">:&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">sexy</span> <span class="n">dress</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&gt;&lt;</span><span class="sr">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Then, you can access each of the capture groups separately, like so:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="c1"># =&gt; &amp;ldquo;the candles, the music, the sexy dress&amp;hellip;&amp;rdquo;</span>
+</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="c1"># =&gt; &amp;ldquo;candles&amp;rdquo;</span>
+</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="c1"># =&gt; &amp;ldquo;music&amp;rdquo;</span>
+</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="c1"># =&gt; &amp;ldquo;sexy dress&amp;rdquo;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>You can even name your capture groups:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">I</span> <span class="n">mean</span><span class="p">,</span> <span class="n">the</span> <span class="n">candles</span><span class="p">,</span> <span class="n">the</span> <span class="n">music</span><span class="p">,</span> <span class="n">the</span> <span class="n">sexy</span> <span class="n">dress</span><span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span>
+</span><span class='line'>       <span class="n">what</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">s</span> <span class="n">going</span> <span class="n">on</span> <span class="n">here?</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="n">m</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/the (?&lt;sexy_item_1&gt;.&lt;em&gt;), the (?&lt;sexy_item_2&gt;.&lt;/em</span><span class="o">&gt;</span><span class="p">),</span> <span class="n">the</span> <span class="p">(?</span><span class="o">&lt;</span><span class="n">sexy_item_3</span><span class="o">&gt;.</span><span class="n">*</span><span class="p">)</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">/</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;h1&gt;=&gt; #&amp;lt;MatchData &amp;ldquo;the candles, the music, the sexy dress&amp;hellip;&amp;rdquo;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="mi">1</span><span class="ss">:&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">candles</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="mi">2</span><span class="ss">:&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">music</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="mi">3</span><span class="ss">:&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">sexy</span> <span class="n">dress</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&gt;&lt;</span><span class="sr">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Then you can access each group using hash syntax:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span><span class="o">[</span><span class="n">sexy_item_1</span><span class="o">]</span> <span class="c1"># =&gt; &amp;ldquo;candles&amp;rdquo;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>4. Atomic Grouping</h3>
+
+<p>An atomic group is a type of capture group. When the regex engine exits it, all backtracking positions are discarded. Let&rsquo;s go over two cases, one that uses atomic grouping, and one that doesn&rsquo;t, and see how the regex engine would operate.</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Tommy</span> <span class="no">Wiseau</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/\A(Tommy|Thomas|Tom)\z/</span><span class="p">)</span> <span class="c1"># =&gt; nil</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>The regex engine first matches the start of the string, \A, and then matches &ldquo;Tommy&rdquo;. However, since it then would leave the capture group and try to match the \z, or the end of a string, the match would fail. The engine would then go back and try to match Thomas, and fail, try to match Tom, and ultimately stop and declare failure. But say we want to shorten this process.</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Tommy</span> <span class="no">Wiseau</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/\A(?&gt;Tommy|Thomas|Tom)\z/</span><span class="p">)</span> <span class="c1"># =&gt; nil</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>In this case, again, the \A is matched as the start of the string, and then the engine tries to match &ldquo;Tommy&rdquo;. It succeeds and moves onto matching \z, which fails. Because of the atomic grouping, the engine has thrown out all back tracing data upon reaching the \z, and therefore fails after only trying to match &ldquo;Tommy&rdquo; rather than all three options in the capture group.</p>
+
+<h3>5. Subexpression Calls</h3>
+
+<p>Okay. Okay. This one is probably the most radical thing about regular expressions.</p>
+
+<p>By using the \g<name> syntax, you can match a previously named subexpression, which can be a group name or number. An example better demonstrates how you use it.</p>
+
+<p>Say that you want to make sure all parenthesis surrounding a string are always balanced. You would use something like this:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;(</span><span class="n">spoons</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;([^()]&lt;em&gt;\g&lt;paren&gt;&lt;/em</span><span class="o">&gt;</span><span class="p">))</span><span class="o">/</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;h1&gt;=&gt; #&lt;MatchData &quot;(spoons)&quot; paren:&quot;(spoons)&quot;&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&amp;</span><span class="n">ldquo</span><span class="p">;((</span><span class="n">spoons</span><span class="p">))</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;([^()]&lt;em&gt;\g&lt;paren&gt;&lt;/em</span><span class="o">&gt;</span><span class="p">))</span><span class="o">/</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;h1&gt;=&gt; #&lt;MatchData &quot;((spoons))&quot; paren:&quot;((spoons))&quot;&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&amp;</span><span class="n">ldquo</span><span class="p">;((</span><span class="n">spoons</span><span class="p">)</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;([^()]&lt;em&gt;\g&lt;paren&gt;&lt;/em</span><span class="o">&gt;</span><span class="p">))</span><span class="o">/</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;h1&gt;=&gt; #&lt;MatchData &quot;&quot; paren:nil&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Cool. Pretty cool. Let&rsquo;s go over what the regex engine does.</p>
+
+<ol>
+<li>Enter a capture group named <em>paren</em>.</li>
+<li>Match a literal <em>(</em>.</li>
+<li>Match the text in between the parenthesis that is anything except for parenthesis.</li>
+<li>Call the <em>paren</em> capture group again, dropping the part in the middle of the parentheses for now.</li>
+<li>Enter the <em>paren</em> capture group again</li>
+<li>Match a literal <em>(</em>, the second character in the group</li>
+<li>Match the text in between the parenthesis that is anything except for parenthesis.</li>
+<li>Try to call <em>paren</em> again, but fail since it would cause the match thus far to fail.</li>
+<li>Match a literal <em>)</em> n times, where n is the depth of the recursion.</li>
+</ol>
+
+
+<p>Note that the * following \g<paren> is extremely important. This allows the regular expression to break out of recursion, since the subexpression can exist 0 or many times. Without it, the recursion would be never ending.</p>
+
+<h3>6. Lookahead and lookbehind assertions</h3>
+
+<p>What if you want to make sure certain characters exist in a regular expression, but you don&rsquo;t want them to be part of your match group? This is when you would want to use a special type of anchor, called lookahead and lookbeind assertions.</p>
+
+<ul>
+<li><em>(?=pat)</em> is a positive lookahead assertion, and ensures that the characters following your expression match &ldquo;pat&rdquo;</li>
+<li><em>(?!pat)</em> is a negative lookahead assertion, and ensures that the characters following your expression do not match &ldquo;pat&rdquo;</li>
+<li><em>(?&lt;=pat)</em> is a positive lookbehind assertion, and ensures that the characters preceeding your expression match &ldquo;pat&rdquo;</li>
+<li><em>(?&lt;!pat)</em> is a negative lookbehind assertion, and ensures that the characters preceeding your expression do not match &ldquo;pat&rdquo;</li>
+</ul>
+
+
+<p>Pretty fantastic, right? For example, say you have a list of emails, and you&rsquo;re trying to find the usernames of all of the ones at a certain domain:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#x74;&amp;#x6f;&amp;#58;&amp;#x6d;&amp;#97;&amp;#114;&amp;#107;&amp;#64;&amp;#x74;&amp;#x68;&amp;#x65;&amp;#x72;&amp;#x6f;&amp;#111;&amp;#109;&amp;#46;&amp;#99;&amp;#x6f;&amp;#x6d;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#x6d;&amp;#97;&amp;#x72;&amp;#107;&amp;#x40;&amp;#x74;&amp;#104;&amp;#x65;&amp;#x72;&amp;#111;&amp;#x6f;&amp;#x6d;&amp;#46;&amp;#99;&amp;#111;&amp;#x6d;&lt;/a&gt;&amp;rdquo;.match(/.*(?=@theroom.com)/)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;=&gt;</span> <span class="c1">#&lt;MatchData &quot;mark&quot;&gt;&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#109;&amp;#97;&amp;#x69;&amp;#x6c;&amp;#x74;&amp;#111;&amp;#58;&amp;#106;&amp;#x6f;&amp;#104;&amp;#x6e;&amp;#110;&amp;#121;&amp;#64;&amp;#x74;&amp;#104;&amp;#x65;&amp;#x72;&amp;#111;&amp;#111;&amp;#109;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#x6d;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#x6a;&amp;#111;&amp;#x68;&amp;#x6e;&amp;#110;&amp;#121;&amp;#64;&amp;#116;&amp;#x68;&amp;#x65;&amp;#x72;&amp;#111;&amp;#x6f;&amp;#109;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#x6d;&lt;/a&gt;&amp;rdquo;.match(/.*(?=theroom.com)/)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;=&gt;</span> <span class="c1">#&lt;MatchData &quot;johnny&quot;&gt;&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#109;&amp;#x61;&amp;#x69;&amp;#108;&amp;#116;&amp;#111;&amp;#58;&amp;#109;&amp;#105;&amp;#99;&amp;#104;&amp;#x61;&amp;#x65;&amp;#x6c;&amp;#x40;&amp;#116;&amp;#114;&amp;#111;&amp;#108;&amp;#108;&amp;#50;&amp;#46;&amp;#x63;&amp;#111;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#109;&amp;#105;&amp;#x63;&amp;#104;&amp;#x61;&amp;#x65;&amp;#108;&amp;#64;&amp;#116;&amp;#114;&amp;#x6f;&amp;#108;&amp;#108;&amp;#x32;&amp;#46;&amp;#99;&amp;#x6f;&amp;#x6d;&lt;/a&gt;&amp;rdquo;.match(/.*(?=theroom.com)/)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;=&gt;</span> <span class="kp">nil</span><span class="o">&lt;</span><span class="sr">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h2>Other References</h2>
+
+<p>If there&rsquo;s still more you want to know about regular expressions in Ruby, I recommend looking at the <a href="http://www.ruby-doc.org/core-2.1.3/Regexp.html">Ruby Docs</a> or visiting the webstite <a href="http://www.regular-expressions.info/">Regular-Expressions.info</a>, which contains more than you&rsquo;d ever want to know about regular expressions. In the best way possible.</p>
+]]></content>
+  </entry>
+  
+</feed>
