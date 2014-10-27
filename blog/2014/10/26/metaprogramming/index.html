@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Ear to the Bits</title>
+  <title>Metaprogramming, in Brief - Ear to the Bits</title>
   <meta name="author" content="Cassie Tarakajian">
 
   <!-- Causes trouble with per-article font implementations under /source/_includes/article.html
@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://">
+  <link rel="canonical" href="http:///blog/2014/10/26/metaprogramming">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Ear to the Bits" type="application/atom+xml">
@@ -85,15 +85,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title" style="font-family: "><a href="/blog/2014/10/26/metaprogramming/">Metaprogramming, in Brief</a></h1>
+      <h1 class="entry-title" style="font-family: ">Metaprogramming, in Brief</h1>
     
     
       <p class="meta">
@@ -109,7 +106,7 @@
   </header>
 
 
-  <div class="entry-content" style="font-family: ; font-size: "><p>Coming from a background in compiled languages, the idea of metaprogramming is fascinating to me. In the world of C, writting and running programs are distinct actions. At runtime, a program cannot be altered. However, in Ruby, the actual code can be modified while it is executing. To those who only know Ruby or similar interpreted languages, it may not seem like a big deal, but to me, I&rsquo;m freaking out a little bit. I went to a hackthon once in which a guy wrote a self-modifying program and Python, and I thought it was black magic, but I didn&rsquo;t realize it was just a gift that comes with the language, and you didn&rsquo;t have to do any serious hacking to dynamically alter the code.</p>
+<div class="entry-content" style="font-family: ; font-size: "><p>Coming from a background in compiled languages, the idea of metaprogramming is fascinating to me. In the world of C, writting and running programs are distinct actions. At runtime, a program cannot be altered. However, in Ruby, the actual code can be modified while it is executing. To those who only know Ruby or similar interpreted languages, it may not seem like a big deal, but to me, I&rsquo;m freaking out a little bit. I went to a hackthon once in which a guy wrote a self-modifying program and Python, and I thought it was black magic, but I didn&rsquo;t realize it was just a gift that comes with the language, and you didn&rsquo;t have to do any serious hacking to dynamically alter the code.</p>
 
 <p>Let&rsquo;s just look at eval. Maybe this isn&rsquo;t so exciting:</p>
 
@@ -342,280 +339,47 @@
 
 <p><img class="center" src="http://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif"></p>
 </div>
+
+
+  <footer class="page-footer">
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http:///blog/2014/10/26/metaprogramming/" data-via="hellothisiscass" data-counturl="http:///blog/2014/10/26/metaprogramming/" >Tweet</a>
   
   
-
-
-    </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title" style="font-family: "><a href="/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/">6 Life-Changing Things About Ruby Regular Expressions</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-10-13T12:03:23-04:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:03 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content" style="font-family: ; font-size: "><h3>1. The Equals Tilde</h3>
-
-<p>What&rsquo;s an equalstilde, you say? Who would come up with such a dumb sounding name for an operator? It actually lies at the foundation of Ruby regular expressions. It allows you to apply a regular expression to a string, and returns the index within the string where the regular expression matches. For example,</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/Lisa/</span> <span class="o">=~</span> <span class="s2">&quot;You&#39;re tearing me apart, Lisa!&quot;</span> <span class="c1">#=&gt; 25</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2. Matchdata</h3>
-
-<p>Instead of using the equalstilde, you can also use a string method called match to apply a regular expression to a string. However, instead of returning an index, it returns this weird type of object called MatchData:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;You&#39;re tearing me apart, Lisa!&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/Lisa/</span><span class="p">)</span> <span class="c1">#=&gt; #&lt;MatchData &quot;Lisa&quot;&gt; </span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Cool, so then what do you do with a MatchData object? It all makes sense when you learn about this crazy thing called&hellip;</p>
-
-<h3>3. Capture groups</h3>
-
-<p>Get ready to have your mind blown. In Ruby, if you use parenthesis in a regular expression, you can utilize capture groups. You can extract multiple parts from a string without using multiple regular expressions, just by putting the part of the string you want to capture. Get out, I know. It&rsquo;s awesome. For example,</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;I mean, the candles, the music, the sexy dress... </span>
-</span><span class='line'><span class="s2">       what&#39;s going on here?&quot;&quot;&quot;</span>
-</span><span class='line'><span class="n">m</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/the (.*), the (.*), the (.*)\.\.\./</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;the candles, the music, the sexy dress...&quot; </span>
-</span><span class='line'><span class="c1"># 1:&quot;candles&quot; 2:&quot;music&quot; 3:&quot;sexy dress&quot;&gt; </span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then, you can access each of the capture groups separately, like so:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="c1"># =&gt; &quot;the candles, the music, the sexy dress...&quot;</span>
-</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="c1"># =&gt; &quot;candles&quot; </span>
-</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="c1"># =&gt; &quot;music&quot;</span>
-</span><span class='line'><span class="n">m</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="c1"># =&gt; &quot;sexy dress&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can even name your capture groups:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;I mean, the candles, the music, the sexy dress... </span>
-</span><span class='line'><span class="s2">       what&#39;s going on here?&quot;&quot;&quot;</span>
-</span><span class='line'><span class="n">m</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/the (?&lt;sexy_item_1&gt;.*), the (?&lt;sexy_item_2&gt;.*), the (?&lt;sexy_item_3&gt;.*)\.\.\./</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;the candles, the music, the sexy dress...&quot; </span>
-</span><span class='line'><span class="c1"># 1:&quot;candles&quot; 2:&quot;music&quot; 3:&quot;sexy dress&quot;&gt; </span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then you can access each group using hash syntax:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">m</span><span class="o">[</span><span class="n">sexy_item_1</span><span class="o">]</span> <span class="c1"># =&gt; &quot;candles&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<h3>4. Atomic Grouping</h3>
-
-<p>An atomic group is a type of capture group. When the regex engine exits it, all backtracking positions are discarded. Let&rsquo;s go over two cases, one that uses atomic grouping, and one that doesn&rsquo;t, and see how the regex engine would operate.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;Tommy Wiseau&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/\A(Tommy|Thomas|Tom)\z/</span><span class="p">)</span> <span class="c1"># =&gt; nil </span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The regex engine first matches the start of the string, \A, and then matches &ldquo;Tommy&rdquo;. However, since it then would leave the capture group and try to match the \z, or the end of a string, the match would fail. The engine would then go back and try to match Thomas, and fail, try to match Tom, and ultimately stop and declare failure. But say we want to shorten this process.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;Tommy Wiseau&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/\A(?&gt;Tommy|Thomas|Tom)\z/</span><span class="p">)</span> <span class="c1"># =&gt; nil</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In this case, again, the \A is matched as the start of the string, and then the engine tries to match &ldquo;Tommy&rdquo;. It succeeds and moves onto matching \z, which fails. Because of the atomic grouping, the engine has thrown out all back tracing data upon reaching the \z, and therefore fails after only trying to match &ldquo;Tommy&rdquo; rather than all three options in the capture group.</p>
-
-<h3>5. Subexpression Calls</h3>
-
-<p>Okay. Okay. This one is probably the most radical thing about regular expressions.</p>
-
-<p>By using the \g<name> syntax, you can match a previously named subexpression, which can be a group name or number. An example better demonstrates how you use it.</p>
-
-<p>Say that you want to make sure all parenthesis surrounding a string are always balanced. You would use something like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;(spoons)&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;\([^()]*\g&lt;paren&gt;*\))/</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;(spoons)&quot; paren:&quot;(spoons)&quot;&gt; </span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">&quot;((spoons))&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;\([^()]*\g&lt;paren&gt;*\))/</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;((spoons))&quot; paren:&quot;((spoons))&quot;&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">&quot;((spoons)&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/(?&lt;paren&gt;\([^()]*\g&lt;paren&gt;*\))/</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;&quot; paren:nil&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Cool. Pretty cool. Let&rsquo;s go over what the regex engine does.</p>
-
-<ol>
-<li>Enter a capture group named <em>paren</em>.</li>
-<li>Match a literal <em>(</em>.</li>
-<li>Match the text in between the parenthesis that is anything except for parenthesis.</li>
-<li>Call the <em>paren</em> capture group again, dropping the part in the middle of the parentheses for now.</li>
-<li>Enter the <em>paren</em> capture group again</li>
-<li>Match a literal <em>(</em>, the second character in the group</li>
-<li>Match the text in between the parenthesis that is anything except for parenthesis.</li>
-<li>Try to call <em>paren</em> again, but fail since it would cause the match thus far to fail.</li>
-<li>Match a literal <em>)</em> n times, where n is the depth of the recursion.</li>
-</ol>
-
-
-<p>Note that the * following \g<paren> is extremely important. This allows the regular expression to break out of recursion, since the subexpression can exist 0 or many times. Without it, the recursion would be never ending.</p>
-
-<h3>6. Lookahead and lookbehind assertions</h3>
-
-<p>What if you want to make sure certain characters exist in a regular expression, but you don&rsquo;t want them to be part of your match group? This is when you would want to use a special type of anchor, called lookahead and lookbeind assertions.</p>
-
-<ul>
-<li><em>(?=pat)</em> is a positive lookahead assertion, and ensures that the characters following your expression match &ldquo;pat&rdquo;</li>
-<li><em>(?!pat)</em> is a negative lookahead assertion, and ensures that the characters following your expression do not match &ldquo;pat&rdquo;</li>
-<li><em>(?&lt;=pat)</em> is a positive lookbehind assertion, and ensures that the characters preceeding your expression match &ldquo;pat&rdquo;</li>
-<li><em>(?&lt;!pat)</em> is a negative lookbehind assertion, and ensures that the characters preceeding your expression do not match &ldquo;pat&rdquo;</li>
-</ul>
-
-
-<p>Pretty fantastic, right? For example, say you have a list of emails, and you&rsquo;re trying to find the usernames of all of the ones at a certain domain:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;mark@theroom.com&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/.*(?=@theroom.com)/</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;mark&quot;&gt; </span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">&quot;johnny@theroom.com&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/.*(?=theroom.com)/</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;MatchData &quot;johnny&quot;&gt; </span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">&quot;michael@troll2.com&quot;</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/.*(?=theroom.com)/</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; nil</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Other References</h2>
-
-<p>If there&rsquo;s still more you want to know about regular expressions in Ruby, I recommend looking at the <a href="http://www.ruby-doc.org/core-2.1.3/Regexp.html">Ruby Docs</a> or visiting the webstite <a href="http://www.regular-expressions.info/">Regular-Expressions.info</a>, which contains more than you&rsquo;d ever want to know about regular expressions. In the best way possible.</p>
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title" style="font-family: "><a href="/blog/2014/04/22/a-sample-post/">This Is a Sample Post</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-04-22T14:40:00-04:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>2:40 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content" style="font-family: ; font-size: "><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/04/22/a-sample-post/">Read on &rarr;</a>
-    </footer>
   
 
+<span class="byline author vcard">Text authored by <span class="fn">Cassie Tarakajian</span></span>
 
-    </article>
-  
-  
-    <article>
+
       
-  <header>
-    
-      <h1 class="entry-title" style="font-family: "><a href="/blog/2011/06/01/this-is-a-test/">This Is Post</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-<time class='entry-date' datetime='2011-06-01T14:44:00-04:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2011</span></span> <span class='time'>2:44 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content" style="font-family: ; font-size: "><p>Booyah!</p>
-</div>
+<br><span class="categories">
+  In categories:
   
+    <a class='category' href='/blog/categories/flatiron-school/'>flatiron school</a>, <a class='category' href='/blog/categories/metaprogramming/'>metaprogramming</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
   
+</span>
 
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+    </p>
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/" 
+           title="Previous Post: 6 Life-Changing Things About Ruby Regular Expressions">&laquo; 6 Life-Changing Things About Ruby Regular Expressions</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
 </div>
 
     </div>

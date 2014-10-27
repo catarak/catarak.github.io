@@ -4,7 +4,7 @@
   <title><![CDATA[Ear to the Bits]]></title>
   <link href="http:///atom.xml" rel="self"/>
   <link href="http:///"/>
-  <updated>2014-10-26T22:57:08-04:00</updated>
+  <updated>2014-10-26T23:11:09-04:00</updated>
   <id>http:///</id>
   <author>
     <name><![CDATA[Cassie Tarakajian]]></name>
@@ -14,7 +14,247 @@
 
   
   <entry>
-    <title type="html"><![CDATA[6 Things About Ruby Regular Expressions That Will Change Your Life Forever]]></title>
+    <title type="html"><![CDATA[Metaprogramming, in Brief]]></title>
+    <link href="http:///blog/2014/10/26/metaprogramming/"/>
+    <updated>2014-10-26T23:03:36-04:00</updated>
+    <id>http:///blog/2014/10/26/metaprogramming</id>
+    <content type="html"><![CDATA[<p>Coming from a background in compiled languages, the idea of metaprogramming is fascinating to me. In the world of C, writting and running programs are distinct actions. At runtime, a program cannot be altered. However, in Ruby, the actual code can be modified while it is executing. To those who only know Ruby or similar interpreted languages, it may not seem like a big deal, but to me, I&rsquo;m freaking out a little bit. I went to a hackthon once in which a guy wrote a self-modifying program and Python, and I thought it was black magic, but I didn&rsquo;t realize it was just a gift that comes with the language, and you didn&rsquo;t have to do any serious hacking to dynamically alter the code.</p>
+
+<p>Let&rsquo;s just look at eval. Maybe this isn&rsquo;t so exciting:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;2 + 2&quot;</span><span class="p">)</span> <span class="c1"># =&gt; 4</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But then, consider this ditty:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Please enter a phrase: &quot;</span>
+</span><span class='line'><span class="c1"># pretend you entered Hello World here</span>
+</span><span class='line'><span class="n">phrase</span> <span class="o">=</span> <span class="nb">gets</span><span class="o">.</span><span class="n">strip</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Enter the name of a string method: &quot;</span>
+</span><span class='line'><span class="c1"># pretend that you entered upcase here</span>
+</span><span class='line'><span class="n">method_name</span> <span class="o">=</span> <span class="nb">gets</span><span class="o">.</span><span class="n">strip</span>
+</span><span class='line'><span class="n">exp</span> <span class="o">=</span> <span class="s2">&quot;&#39;</span><span class="si">#{</span><span class="n">phrase</span><span class="si">}</span><span class="s2">&#39;.</span><span class="si">#{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="nb">eval</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span> <span class="c1"># =&gt; HELLO WORLD</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">exp</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># =&gt; &#39;Hello World&#39;.upcase</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s pretty cool. You just wrote a little program on the fly. What else can you do? You can write a program that writes programs.</p>
+
+<p><img class="center" src="http://i.imgur.com/pz0sYGz.jpg"></p>
+
+<p>Yeah dawg. I&rsquo;m for real. This is all of the code it takes (Adapted from <a href="http://www.sapphiresteel.com/The-Book-Of-Ruby">The Book of Ruby by Huw Collingbourne</a>):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="n">input</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="k">while</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;q&quot;</span>
+</span><span class='line'>  <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;?&gt; &quot;</span> <span class="p">)</span>
+</span><span class='line'>  <span class="n">line</span> <span class="o">=</span> <span class="nb">gets</span><span class="o">.</span><span class="n">strip</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">line</span>
+</span><span class='line'>  <span class="k">when</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Evaluating...&quot;</span>
+</span><span class='line'>    <span class="nb">eval</span> <span class="n">input</span>
+</span><span class='line'>    <span class="n">program</span> <span class="o">+=</span> <span class="n">input</span>
+</span><span class='line'>    <span class="n">input</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>  <span class="k">when</span> <span class="s1">&#39;l&#39;</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Listing the program you&#39;ve written so far...&quot;</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">program</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="n">input</span> <span class="o">+=</span> <span class="n">line</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you run this, you kind of have a REPL, but it&rsquo;s significantly dumber than IRB:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>?> def scramble(s)
+</span><span class='line'>?> s.split("").shuffle.join("")
+</span><span class='line'>?> end
+</span><span class='line'>?> 
+</span><span class='line'>Evaluating...
+</span><span class='line'>?> puts scramble("Hello")
+</span><span class='line'>?> 
+</span><span class='line'>Evaluating...
+</span><span class='line'>Holle</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cool. So what other applications does metaprogramming have in Ruby besides writing REPL&rsquo;s? As it turns out, it&rsquo;s one of my favorite things I&rsquo;ve learned about in Ruby thus far: ActiveRecord. When you define associations between models, whether it be belongs_to or has_many or anything else, the methods that you get for free are all generated on the fly. It does this using eigen or singleton classes. This is having the ability to define methods for specific instances of a class, after the class has already been defined. For example, say you define a class like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Roomba</span>
+</span><span class='line'>  <span class="c1"># Some other methods</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">vacuum_floor</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">floor</span><span class="o">.</span><span class="n">dirty?</span>
+</span><span class='line'>      <span class="c1">#vacuum for 5 seconds</span>
+</span><span class='line'>      <span class="n">vacuum</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">clogged</span>
+</span><span class='line'>        <span class="k">raise</span> <span class="no">Roomba</span><span class="o">::</span><span class="no">CloggedException</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you would instantiate it as</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">fido</span> <span class="o">=</span> <span class="no">Roomba</span><span class="o">.</span><span class="n">new</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But say you got the newer model, which knows how to unclog itself. Then you could do something like</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nc">fido</span><span class="o">.</span><span class="nf">vacuum_floor</span>
+</span><span class='line'>  <span class="c1">#vacuum for 5 seconds</span>
+</span><span class='line'>  <span class="n">vacuum</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">clogged</span>
+</span><span class='line'>    <span class="n">reverse_suction</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There&rsquo;s also this other fancy syntax you can use:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="n">fido</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">vacuum_with_style</span>
+</span><span class='line'>    <span class="n">vacuum</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">robo_boogie</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It looks mysterious, but it&rsquo;s doing the same thing, I swear.</p>
+
+<p>You can actually define singleton methods for classes as well, and they&rsquo;re simply called class methods. You can do this in a number of ways:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Roomba</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">warranty</span>
+</span><span class='line'>    <span class="s2">&quot;Lifetime&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is the syntax we&rsquo;re familiar with. But there&rsquo;s more:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Roomba</span>
+</span><span class='line'>  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">warranty</span>
+</span><span class='line'>      <span class="s2">&quot;Lifetime&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nc">Roomba</span><span class="o">.</span><span class="nf">warranty</span>
+</span><span class='line'>  <span class="s2">&quot;Lifetime&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="no">Roomba</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">warranty</span>
+</span><span class='line'>    <span class="s2">&quot;Lifetime&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ActiveRecord creates new singleton methods for instances and classes when you define associations. It may seem like magic, but that magic is just metaprogramming.</p>
+
+<p><img class="center" src="http://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[6 Life-Changing Things About Ruby Regular Expressions]]></title>
     <link href="http:///blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/"/>
     <updated>2014-10-13T12:03:23-04:00</updated>
     <id>http:///blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever</id>
