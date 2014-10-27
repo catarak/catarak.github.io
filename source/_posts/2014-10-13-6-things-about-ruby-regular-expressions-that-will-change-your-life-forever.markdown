@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "6 Things about Ruby Regular Expressions That Will Change Your Life Forever"
+title: "6 Life-Changing Things about Ruby Regular Expressions"
 date: 2014-10-13 12:03:23 -0400
 comments: true
 categories: [Ruby, Regular Expressions, Flatiron School]
