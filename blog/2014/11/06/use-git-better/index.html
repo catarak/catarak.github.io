@@ -106,45 +106,142 @@
   </header>
 
 
-<div class="entry-content" style="font-family: ; font-size: "><p>When I first learned git, I thought I understood it all. I had a grasp of the process of cloning a repository, making your own changes, and then making a pull request. It made analogies to the old days when I worked in subversion. But then, I started to think about how to use git in production. And the question dawned on me: how do I merge in changes from the master branch of he repository that I forked <em>from</em>? I understood working with a bunch of local repositories and one remote, but what if there are multiple remote repos?</p>
+<div class="entry-content" style="font-family: ; font-size: "><p>When I first learned git, I thought I understood it all. I had a grasp of the process of cloning a repository, making your own changes, and then making a pull request. I had made sense of it by making analogies to the old days when I worked in subversion. But then, I started to think about how to use git in production. And the question dawned on me: how do I synchronize with the master branch of the repository that I forked <em>from</em>? I understood the workflow of having a lot of local repositories and one remote, but when in came to multiple remote repositories, I was lost.</p>
 
-<p>As it turns out, it&rsquo;s pretty easy to set up. If you&rsquo;re in your cloned repository,</p>
+<p>As it turns out, it&rsquo;s easy to set up. First, make sure you&rsquo;ve forked a repository, and have cloned your version locally.</p>
 
-<p><img class="left" src="/images/git_images/command_line" title="Command Line" ></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git@github.com:catarak/ruby-lectures-ruby-006.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>ruby-lectures-ruby-006
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, if you&rsquo;re in the local directory of your cloned repository,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>13:11:09<span class="o">]</span> <span class="o">(</span>master<span class="o">)</span> ruby-lectures-ruby-006
+</span><span class='line'><span class="nv">$ </span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>You can see your configured remote repositories by running,</p>
 
-<p><img class="left" src="/images/git_images/remote_before" title="All Remotes Before" ></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote -v
+</span><span class='line'>origin  git@github.com:catarak/ruby-lectures-ruby-006.git <span class="o">(</span>fetch<span class="o">)</span>
+</span><span class='line'>origin  git@github.com:catarak/ruby-lectures-ruby-006.git <span class="o">(</span>push<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Then add the remote repository that you forked from as &ldquo;upstream,&rdquo; like so,</p>
 
-<p><img class="left" src="/images/git_images/remote_add" title="Add Remote" ></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote add upstream git@github.com:flatiron-school-ironboard/ruby-lectures-ruby-006.git
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Then, if you run git remote -v again,</p>
 
-<p><img class="left" src="/images/git_images/remote_after" title="All Remotes After" ></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote -v
+</span><span class='line'>origin  git@github.com:catarak/ruby-lectures-ruby-006.git <span class="o">(</span>fetch<span class="o">)</span>
+</span><span class='line'>origin  git@github.com:catarak/ruby-lectures-ruby-006.git <span class="o">(</span>push<span class="o">)</span>
+</span><span class='line'>upstream  git@github.com:flatiron-school-ironboard/ruby-lectures-ruby-006.git <span class="o">(</span>fetch<span class="o">)</span>
+</span><span class='line'>upstream  git@github.com:flatiron-school-ironboard/ruby-lectures-ruby-006.git <span class="o">(</span>push<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>You will see that you have added a new remote.</p>
 
-<p>Now that we&rsquo;ve set that up, you can now easily synchronize your fork. First, fetch the remote repository:</p>
+<p>Now that we&rsquo;ve set that up, you can now easily synchronize your fork. First, fetch the remote repository,</p>
 
-<p><img class="left" src="/images/git_images/fetch_upstream" title="Fetch Upstream Master" ></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git fetch upstream
+</span><span class='line'>remote: Counting objects: 22, <span class="k">done</span>.
+</span><span class='line'>remote: Compressing objects: 100% <span class="o">(</span>9/9<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>remote: Total <span class="m">22</span> <span class="o">(</span>delta 16<span class="o">)</span>, reused <span class="m">19</span> <span class="o">(</span>delta 13<span class="o">)</span>
+</span><span class='line'>Unpacking objects: 100% <span class="o">(</span>22/22<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>From github.com:flatiron-school-ironboard/ruby-lectures-ruby-006
+</span><span class='line'>   7bfa768..68d09cc  master     -&gt; upstream/master
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Then, merge in the changes. You may have some merge conflicts (if, say, you&rsquo;ve been taking some lecture notes):</p>
 
-<p><img class="left" src="/images/git_images/merge_conflicts" title="Fix Merge Conflicts" ></p>
+<p>Then, make sure you&rsquo;re on the master branch,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git checkout master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And then merge in the changes. You may have some merge conflicts (if, say, you&rsquo;ve been taking some lecture notes),</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git merge upstream/master
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/db/schema.rb
+</span><span class='line'>CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict in rails-lecture-7/todoapp/db/schema.rb
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/config/routes.rb
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/config/initializers/omniauth.rb
+</span><span class='line'>CONFLICT <span class="o">(</span>add/add<span class="o">)</span>: Merge conflict in rails-lecture-7/todoapp/config/initializers/omniauth.rb
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/app/views/lists/index.html.erb
+</span><span class='line'>CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict in rails-lecture-7/todoapp/app/views/lists/index.html.erb
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/app/models/user.rb
+</span><span class='line'>CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict in rails-lecture-7/todoapp/app/models/user.rb
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/app/controllers/sessions_controller.rb
+</span><span class='line'>CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict in rails-lecture-7/todoapp/app/controllers/sessions_controller.rb
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/app/controllers/application_controller.rb
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/Gemfile.lock
+</span><span class='line'>CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict in rails-lecture-7/todoapp/Gemfile.lock
+</span><span class='line'>Auto-merging rails-lecture-7/todoapp/Gemfile
+</span><span class='line'>Automatic merge failed<span class="p">;</span> fix conflicts and <span class="k">then</span> commit the result.
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If there are no conflicts, the changes will be commited automatically. If there are merge conflicts, add your changes and commit then:</p>
 
-<p><img class="left" src="/images/git_images/git_commit"></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -am <span class="s2">&quot;fixin merge conflicts&quot;</span>
+</span><span class='line'><span class="o">[</span>master b2c9367<span class="o">]</span> fixin merge conflicts
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>And now, you&rsquo;re done.</p>
 
-<p>The benefit of setting this up is that you can easily merge in changes from the master of the project, but also have your own version and not worry about accidentally pushing to master.</p>
+<p><img class="center" src="http://media.giphy.com/media/Y1N6D0KQODwzu/giphy.gif"></p>
 
-<p>The benefit of this for the students of The Flatiron School is that you can take better notes in lecture. I like to try to keep up, and type everything that&rsquo;s happening in lecture. If I find that I have a typo or some other issue, I&rsquo;ll forget about it and keep writing stuff along with the instructor.</p>
+<p>The benefit of setting this up is that you can easily merge in the latest changes from the master of the project, but also have your own version. You can also not worry about accidentally pushing to the master of the repository you forked from.</p>
 
-<p>The prerequisite to this is that you&rsquo;ve forked the Ruby Lectures repository, but I think all of you already know how to do that.</p>
+<p>The benefit of this for me, currently, is that I&rsquo;m a student at The Flatiron School. Our lecture notes are a repository. By doing this, I can take better notes in lecture. I like to try to keep up, and type everything that&rsquo;s happening in lecture. If I find that I have a typo or some other issue, I&rsquo;ll forget about it and keep writing stuff along with the instructor. Then, when lecture is over, I&rsquo;ll merge in what was happening in lecture, fixing everything that wasn&rsquo;t working during lecture. I find that by doing this, I&rsquo;m more engaged in lecture and the information sticks.</p>
 </div>
 
 
