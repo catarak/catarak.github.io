@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron School | Ear to the Bits]]></title>
   <link href="http:///blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http:///"/>
-  <updated>2014-10-26T23:11:09-04:00</updated>
+  <updated>2014-11-07T13:58:41-05:00</updated>
   <id>http:///</id>
   <author>
     <name><![CDATA[Cassie Tarakajian]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Use Git Better (and Pay Attention in Lecture Better)]]></title>
+    <link href="http:///blog/2014/11/06/use-git-better/"/>
+    <updated>2014-11-06T20:16:14-05:00</updated>
+    <id>http:///blog/2014/11/06/use-git-better</id>
+    <content type="html"><![CDATA[<p>When I first learned git, I thought I understood it all. I had a grasp of the process of cloning a repository, making your own changes, and then making a pull request. It made analogies to the old days when I worked in subversion. But then, I started to think about how to use git in production. And the question dawned on me: how do I merge in changes from the master branch of he repository that I forked <em>from</em>? I understood working with a bunch of local repositories and one remote, but what if there are multiple remote repos?</p>
+
+<p>As it turns out, it&rsquo;s pretty easy to set up. If you&rsquo;re in your cloned repository,</p>
+
+<p><img class="left" src="/images/git_images/command_line" title="Command Line" ></p>
+
+<p>You can see your configured remote repositories by running,</p>
+
+<p><img class="left" src="/images/git_images/remote_before" title="All Remotes Before" ></p>
+
+<p>Then add the remote repository that you forked from as &ldquo;upstream,&rdquo; like so,</p>
+
+<p><img class="left" src="/images/git_images/remote_add" title="Add Remote" ></p>
+
+<p>Then, if you run git remote -v again,</p>
+
+<p><img class="left" src="/images/git_images/remote_after" title="All Remotes After" ></p>
+
+<p>You will see that you have added a new remote.</p>
+
+<p>Now that we&rsquo;ve set that up, you can now easily synchronize your fork. First, fetch the remote repository:</p>
+
+<p><img class="left" src="/images/git_images/fetch_upstream" title="Fetch Upstream Master" ></p>
+
+<p>Then, merge in the changes. You may have some merge conflicts (if, say, you&rsquo;ve been taking some lecture notes):</p>
+
+<p><img class="left" src="/images/git_images/merge_conflicts" title="Fix Merge Conflicts" ></p>
+
+<p>If there are no conflicts, the changes will be commited automatically. If there are merge conflicts, add your changes and commit then:</p>
+
+<p><img class="left" src="/images/git_images/git_commit"></p>
+
+<p>And now, you&rsquo;re done.</p>
+
+<p>The benefit of setting this up is that you can easily merge in changes from the master of the project, but also have your own version and not worry about accidentally pushing to master.</p>
+
+<p>The benefit of this for the students of The Flatiron School is that you can take better notes in lecture. I like to try to keep up, and type everything that&rsquo;s happening in lecture. If I find that I have a typo or some other issue, I&rsquo;ll forget about it and keep writing stuff along with the instructor.</p>
+
+<p>The prerequisite to this is that you&rsquo;ve forked the Ruby Lectures repository, but I think all of you already know how to do that.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Metaprogramming, in Brief]]></title>
@@ -434,15 +481,15 @@
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#97;&amp;#105;&amp;#x6c;&amp;#x74;&amp;#x6f;&amp;#x3a;&amp;#x6d;&amp;#x61;&amp;#114;&amp;#107;&amp;#64;&amp;#116;&amp;#104;&amp;#101;&amp;#x72;&amp;#x6f;&amp;#x6f;&amp;#x6d;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#109;&amp;#x61;&amp;#x72;&amp;#x6b;&amp;#64;&amp;#x74;&amp;#104;&amp;#101;&amp;#114;&amp;#111;&amp;#x6f;&amp;#109;&amp;#x2e;&amp;#99;&amp;#x6f;&amp;#x6d;&lt;/a&gt;&amp;rdquo;.match(/.*(?=@theroom.com)/)&lt;/p&gt;</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#109;&amp;#x61;&amp;#105;&amp;#x6c;&amp;#x74;&amp;#111;&amp;#58;&amp;#x6d;&amp;#97;&amp;#114;&amp;#107;&amp;#x40;&amp;#116;&amp;#104;&amp;#x65;&amp;#x72;&amp;#x6f;&amp;#x6f;&amp;#x6d;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#x6d;&amp;#97;&amp;#x72;&amp;#x6b;&amp;#64;&amp;#116;&amp;#x68;&amp;#x65;&amp;#114;&amp;#111;&amp;#x6f;&amp;#109;&amp;#46;&amp;#x63;&amp;#111;&amp;#x6d;&lt;/a&gt;&amp;rdquo;.match(/.*(?=@theroom.com)/)&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;=&gt;</span> <span class="c1">#&lt;MatchData &quot;mark&quot;&gt;&lt;/h1&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#97;&amp;#x69;&amp;#x6c;&amp;#116;&amp;#x6f;&amp;#58;&amp;#x6a;&amp;#x6f;&amp;#x68;&amp;#110;&amp;#110;&amp;#121;&amp;#x40;&amp;#x74;&amp;#x68;&amp;#101;&amp;#114;&amp;#111;&amp;#111;&amp;#x6d;&amp;#x2e;&amp;#x63;&amp;#111;&amp;#x6d;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#106;&amp;#111;&amp;#x68;&amp;#110;&amp;#x6e;&amp;#121;&amp;#64;&amp;#x74;&amp;#x68;&amp;#x65;&amp;#x72;&amp;#x6f;&amp;#x6f;&amp;#109;&amp;#46;&amp;#x63;&amp;#111;&amp;#109;&lt;/a&gt;&amp;rdquo;.match(/.*(?=theroom.com)/)&lt;/p&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#97;&amp;#x69;&amp;#108;&amp;#116;&amp;#111;&amp;#x3a;&amp;#106;&amp;#x6f;&amp;#104;&amp;#x6e;&amp;#x6e;&amp;#x79;&amp;#x40;&amp;#116;&amp;#x68;&amp;#x65;&amp;#x72;&amp;#111;&amp;#x6f;&amp;#x6d;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#106;&amp;#x6f;&amp;#104;&amp;#110;&amp;#110;&amp;#x79;&amp;#x40;&amp;#116;&amp;#x68;&amp;#101;&amp;#x72;&amp;#x6f;&amp;#x6f;&amp;#x6d;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;&amp;rdquo;.match(/.*(?=theroom.com)/)&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;=&gt;</span> <span class="c1">#&lt;MatchData &quot;johnny&quot;&gt;&lt;/h1&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#x61;&amp;#x69;&amp;#108;&amp;#x74;&amp;#111;&amp;#x3a;&amp;#109;&amp;#x69;&amp;#99;&amp;#x68;&amp;#x61;&amp;#x65;&amp;#x6c;&amp;#x40;&amp;#116;&amp;#x72;&amp;#x6f;&amp;#108;&amp;#x6c;&amp;#50;&amp;#46;&amp;#x63;&amp;#111;&amp;#x6d;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#109;&amp;#105;&amp;#x63;&amp;#x68;&amp;#x61;&amp;#x65;&amp;#x6c;&amp;#64;&amp;#x74;&amp;#x72;&amp;#111;&amp;#x6c;&amp;#108;&amp;#50;&amp;#46;&amp;#99;&amp;#x6f;&amp;#109;&lt;/a&gt;&amp;rdquo;.match(/.*(?=theroom.com)/)&lt;/p&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;&amp;#x6d;&amp;#x61;&amp;#105;&amp;#108;&amp;#116;&amp;#x6f;&amp;#58;&amp;#109;&amp;#105;&amp;#99;&amp;#x68;&amp;#x61;&amp;#101;&amp;#x6c;&amp;#x40;&amp;#116;&amp;#x72;&amp;#x6f;&amp;#x6c;&amp;#x6c;&amp;#x32;&amp;#46;&amp;#x63;&amp;#111;&amp;#x6d;&quot;</span><span class="o">&gt;&amp;</span><span class="c1">#109;&amp;#x69;&amp;#99;&amp;#104;&amp;#97;&amp;#101;&amp;#108;&amp;#x40;&amp;#116;&amp;#114;&amp;#111;&amp;#x6c;&amp;#x6c;&amp;#50;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;&lt;/a&gt;&amp;rdquo;.match(/.*(?=theroom.com)/)&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;=&gt;</span> <span class="kp">nil</span><span class="o">&lt;</span><span class="sr">/h1&gt;</span>
 </span><span class='line'>

@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Flatiron School - Ear to the Bits</title>
+  <title>Use Git Better (and Pay Attention in Lecture Better) - Ear to the Bits</title>
   <meta name="author" content="Cassie Tarakajian">
 
   <!-- Causes trouble with per-article font implementations under /source/_includes/article.html
   
-  <meta name="description" content="Category: flatiron school">
+  <meta name="description" content="Use Git Better (and Pay Attention in Lecture Better) Nov 6th, 2014 8:16 pm When I first learned git, I thought I understood it all. I had a grasp of &hellip;">
   &#8211;>
   
 
@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http:///blog/categories/flatiron-school">
+  <link rel="canonical" href="http:///blog/2014/11/06/use-git-better">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Ear to the Bits" type="application/atom+xml">
@@ -86,63 +86,105 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Flatiron School</h1>
+    
+      <h1 class="entry-title" style="font-family: ">Use Git Better (and Pay Attention in Lecture Better)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-06T20:16:14-05:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:16 pm</span></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content" style="font-family: ; font-size: "><p>When I first learned git, I thought I understood it all. I had a grasp of the process of cloning a repository, making your own changes, and then making a pull request. It made analogies to the old days when I worked in subversion. But then, I started to think about how to use git in production. And the question dawned on me: how do I merge in changes from the master branch of he repository that I forked <em>from</em>? I understood working with a bunch of local repositories and one remote, but what if there are multiple remote repos?</p>
 
-  
-  <h2>2014</h2>
+<p>As it turns out, it&rsquo;s pretty easy to set up. If you&rsquo;re in your cloned repository,</p>
 
-<article>
-  
-<h1><a href="/blog/2014/11/06/use-git-better/">Use Git Better (and Pay Attention in Lecture Better)</a></h1>
-<time datetime="2014-11-06T20:16:14-05:00" pubdate><span class='month'>Nov</span> <span class='day'>06</span> <span class='year'>2014</span></time>
+<p><img class="left" src="/images/git_images/command_line" title="Command Line" ></p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/flatiron-school/'>flatiron school</a>, <a class='category' href='/blog/categories/git/'>git</a></span>
-</footer>
+<p>You can see your configured remote repositories by running,</p>
 
+<p><img class="left" src="/images/git_images/remote_before" title="All Remotes Before" ></p>
 
-</article>
+<p>Then add the remote repository that you forked from as &ldquo;upstream,&rdquo; like so,</p>
 
+<p><img class="left" src="/images/git_images/remote_add" title="Add Remote" ></p>
 
+<p>Then, if you run git remote -v again,</p>
 
-<article>
-  
-<h1><a href="/blog/2014/10/26/metaprogramming/">Metaprogramming, in Brief</a></h1>
-<time datetime="2014-10-26T23:03:36-04:00" pubdate><span class='month'>Oct</span> <span class='day'>26</span> <span class='year'>2014</span></time>
+<p><img class="left" src="/images/git_images/remote_after" title="All Remotes After" ></p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/flatiron-school/'>flatiron school</a>, <a class='category' href='/blog/categories/metaprogramming/'>metaprogramming</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a></span>
-</footer>
+<p>You will see that you have added a new remote.</p>
 
+<p>Now that we&rsquo;ve set that up, you can now easily synchronize your fork. First, fetch the remote repository:</p>
 
-</article>
+<p><img class="left" src="/images/git_images/fetch_upstream" title="Fetch Upstream Master" ></p>
 
+<p>Then, merge in the changes. You may have some merge conflicts (if, say, you&rsquo;ve been taking some lecture notes):</p>
 
+<p><img class="left" src="/images/git_images/merge_conflicts" title="Fix Merge Conflicts" ></p>
 
-<article>
-  
-<h1><a href="/blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/">6 Life-Changing Things About Ruby Regular Expressions</a></h1>
-<time datetime="2014-10-13T12:03:23-04:00" pubdate><span class='month'>Oct</span> <span class='day'>13</span> <span class='year'>2014</span></time>
+<p>If there are no conflicts, the changes will be commited automatically. If there are merge conflicts, add your changes and commit then:</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/flatiron-school/'>flatiron school</a>, <a class='category' href='/blog/categories/regular-expressions/'>regular expressions</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a></span>
-</footer>
+<p><img class="left" src="/images/git_images/git_commit"></p>
 
+<p>And now, you&rsquo;re done.</p>
 
-</article>
+<p>The benefit of setting this up is that you can easily merge in changes from the master of the project, but also have your own version and not worry about accidentally pushing to master.</p>
 
+<p>The benefit of this for the students of The Flatiron School is that you can take better notes in lecture. I like to try to keep up, and type everything that&rsquo;s happening in lecture. If I find that I have a typo or some other issue, I&rsquo;ll forget about it and keep writing stuff along with the instructor.</p>
+
+<p>The prerequisite to this is that you&rsquo;ve forked the Ruby Lectures repository, but I think all of you already know how to do that.</p>
 </div>
 
+
+  <footer class="page-footer">
+    
+      <div class="sharing">
   
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http:///blog/2014/11/06/use-git-better/" data-via="hellothisiscass" data-counturl="http:///blog/2014/11/06/use-git-better/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Text authored by <span class="fn">Cassie Tarakajian</span></span>
+
+
+      
+
+<br><span class="categories">
+  In categories:
+  
+    <a class='category' href='/blog/categories/flatiron-school/'>flatiron school</a>, <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/26/metaprogramming/" 
+           title="Previous Post: Metaprogramming, in Brief">&laquo; Metaprogramming, in Brief</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
