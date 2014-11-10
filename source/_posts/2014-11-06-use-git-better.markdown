@@ -102,3 +102,5 @@ And now, you're done.
 The benefit of setting this up is that you can easily merge in the latest changes from the master of the project, but also have your own version. You can also not worry about accidentally pushing to the master of the repository you forked from.  
 
 The benefit of this for me, currently, is that I'm a student at The Flatiron School. Our lecture notes are a repository. By doing this, I can take better notes in lecture. I like to try to keep up, and type everything that's happening in lecture. If I find that I have a typo or some other issue, I'll forget about it and keep writing stuff along with the instructor. Then, when lecture is over, I'll merge in what was happening in lecture, fixing everything that wasn't working during lecture. I find that by doing this, I'm more engaged in lecture and the information sticks. 
+
+As a side note, watch out for duplicate migrations. If you're following everything in class, you probably would have created the same migrations as the instructor but at a slightly different time. Just delete one of the duplicates and then commit your changes.
