@@ -21,89 +21,79 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http:///blog/2014/10/13/6-things-about-ruby-regular-expressions-that-will-change-your-life-forever/</loc>
+    <loc>http:///blog/2014/10/13/ruby-regular-expressions/</loc>
     <lastmod>2014-10-13T12:03:23-04:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http:///blog/2014/04/22/a-sample-post/</loc>
-    <lastmod>2014-04-22T14:40:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http:///blog/2011/06/01/this-is-a-test/</loc>
-    <lastmod>2011-06-01T14:44:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>http:///javascripts/libs/bootstrap-3.0.0/components.html</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///javascripts/libs/bootstrap-3.0.0/css.html</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///javascripts/libs/bootstrap-3.0.0/customize.html</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///javascripts/libs/bootstrap-3.0.0/getting-started.html</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///blog/</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///archives/</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http:///javascripts/libs/bootstrap-3.0.0/</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///projects/</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///blog/archives/</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///about/</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http:///javascripts/libs/bootstrap-3.0.0/javascript.html</loc>
-    <lastmod>2014-12-01T00:53:13-05:00</lastmod>
+    <lastmod>2014-12-02T00:40:40-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
