@@ -4,7 +4,7 @@
   <title><![CDATA[Ear to the Bits]]></title>
   <link href="http:///atom.xml" rel="self"/>
   <link href="http:///"/>
-  <updated>2014-12-02T00:40:40-05:00</updated>
+  <updated>2014-12-02T00:47:46-05:00</updated>
   <id>http:///</id>
   <author>
     <name><![CDATA[Cassie Tarakajian]]></name>
@@ -223,7 +223,7 @@
     <link href="http:///blog/2014/10/26/metaprogramming/"/>
     <updated>2014-10-26T23:03:36-04:00</updated>
     <id>http:///blog/2014/10/26/metaprogramming</id>
-    <content type="html"><![CDATA[<p>Coming from a background in compiled languages, the idea of metaprogramming is fascinating to me. In the world of C, writting and running programs are distinct actions. At runtime, a program cannot be altered. However, in Ruby, the actual code can be modified while it is executing. To those who only know Ruby or similar interpreted languages, it may not seem like a big deal, but to me, I&rsquo;m freaking out a little bit. I went to a hackthon once in which a guy wrote a self-modifying program and Python, and I thought it was black magic, but I didn&rsquo;t realize it was just a gift that comes with the language, and you didn&rsquo;t have to do any serious hacking to dynamically alter the code.</p>
+    <content type="html"><![CDATA[<p>Coming from a background in compiled languages, the idea of metaprogramming is fascinating to me. In the world of C, writting and running programs are distinct actions. At runtime, a program cannot be altered. However, in Ruby, the actual code can be modified while it is executing. To those who only know Ruby or similar interpreted languages, it may not seem like a big deal, but to me, it&rsquo;s the coolect thing ever. At a hackathon I went to once a guy wrote a self-modifying program in Python, and I thought it was black magic. I didn&rsquo;t realize it was just a gift that comes with the language, and you didn&rsquo;t have to do any serious hacking to dynamically alter the code.</p>
 
 <p>Let&rsquo;s just look at eval. Maybe this isn&rsquo;t so exciting:</p>
 
