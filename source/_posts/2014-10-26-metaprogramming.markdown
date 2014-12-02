@@ -6,7 +6,7 @@ comments: true
 categories: [Flatiron School, Ruby, Metaprogramming]
 ---
 
-Coming from a background in compiled languages, the idea of metaprogramming is fascinating to me. In the world of C, writting and running programs are distinct actions. At runtime, a program cannot be altered. However, in Ruby, the actual code can be modified while it is executing. To those who only know Ruby or similar interpreted languages, it may not seem like a big deal, but to me, I'm freaking out a little bit. I went to a hackthon once in which a guy wrote a self-modifying program and Python, and I thought it was black magic, but I didn't realize it was just a gift that comes with the language, and you didn't have to do any serious hacking to dynamically alter the code. 
+Coming from a background in compiled languages, the idea of metaprogramming is fascinating to me. In the world of C, writting and running programs are distinct actions. At runtime, a program cannot be altered. However, in Ruby, the actual code can be modified while it is executing. To those who only know Ruby or similar interpreted languages, it may not seem like a big deal, but to me, it's the coolect thing ever. At a hackathon I went to once a guy wrote a self-modifying program in Python, and I thought it was black magic. I didn't realize it was just a gift that comes with the language, and you didn't have to do any serious hacking to dynamically alter the code. 
 
 Let's just look at eval. Maybe this isn't so exciting:
 
