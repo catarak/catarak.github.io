@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Build a Drum Machine in your Browser"
+title: "I Built a Drum Machine"
 date: 2014-11-30 18:51:53 -0500
 comments: true
 categories: [Web Audio]
@@ -12,8 +12,6 @@ I first followed this [Virtual Synth](http://www.sitepoint.com/html5-web-audio-a
 
 * No ability to create a sequence. What good is a drum machine without a sequencer ([unless you're Araabmuzik](https://www.youtube.com/watch?v=wXRnbS6o64U))?
 * Either I implemented the filter wrong, which is very possible, or it doesn't work correctly. It doesn't use a logarithmic scale, however, which is definitely a big mistake.
-
-As I was trying to figure out how to sequence audio events, I came upon a article that went slightly above my head when I first read it. In ["A Tale of Two Clocks"](http://www.html5rocks.com/en/tutorials/audio/scheduling/), the author makes it clear that you must synchronize to the Web Audio API clock, and not the Javascript clock, since the latter is imprecise. Even slight audio stuttering is very noticeable. The author links to a sequencer created by Google engineers, called [Shiny Drum Machine](http://chromium.googlecode.com/svn/trunk/samples/audio/shiny-drum-machine.html), which I used for reference. The code itself is good but not great, and could definitely be organized better. 
 
 I threw a bunch of stuff together just to get a working app, but I think that my next step is definitely to pause for a moment and refactor. 
 
