@@ -6,7 +6,7 @@ comments: true
 categories: [Web Audio, Tutorial]
 ---
 
-My last post was a delirious declaration that I had finally made something with Web Audio. Now I want to explain how I did it. First, what is Web Audio, and why do we need it?
+My last post was a delirious declaration that I had finally made something with Web Audio. [Here it is](http://web-audio-sequencer.herokuapp.com/), a drum sequencer in the browser. Now I want to explain how I did it. First, what is Web Audio, and why do we need it?
 
 The Web Audio API is a versatile system for controlling audio in the web. It does this inside an **audio context**, which you declare as follows:
 
@@ -158,7 +158,9 @@ This variable simply represents where you are in the context of the loop, and re
 
 Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in [this StackOverflow](http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api), synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, this is only important if you want to synchronize animations to Web Audio. For that, you can read the last section in [A Tale of Two Clocks](http://www.html5rocks.com/en/tutorials/audio/scheduling/).
 
-Look out for a part two of this blog post, which will explain more in depth about **audio routing graphs**, and different types of nodes, i.e. how to add different types of effects. 
+If you've got this scheduling thing down, and want to learn how to integrate it into our own application, I recommend checking out my code at [Github](https://github.com/catarak/web-audio-sequencer) to see how I did it.
+
+Thanks for reading, and look out for a part two of this blog post, which will explain more in depth about **audio routing graphs**, and different types of nodes, i.e. how to add different types of effects. 
 
 
 
