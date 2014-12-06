@@ -4,7 +4,7 @@
   <title><![CDATA[Ear to the Bits]]></title>
   <link href="http:///atom.xml" rel="self"/>
   <link href="http:///"/>
-  <updated>2014-12-06T16:53:51-05:00</updated>
+  <updated>2014-12-06T16:57:12-05:00</updated>
   <id>http:///</id>
   <author>
     <name><![CDATA[Cassie Tarakajian]]></name>
@@ -263,10 +263,10 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Build a Drum Machine in Your Browser]]></title>
-    <link href="http:///blog/2014/11/30/decoding-web-audio/"/>
+    <title type="html"><![CDATA[I Built a Drum Machine]]></title>
+    <link href="http:///blog/2014/11/30/i-built-a-drum-machine/"/>
     <updated>2014-11-30T18:51:53-05:00</updated>
-    <id>http:///blog/2014/11/30/decoding-web-audio</id>
+    <id>http:///blog/2014/11/30/i-built-a-drum-machine</id>
     <content type="html"><![CDATA[<p>In my college career, I majored in electrical engineering, and because of this, I learned about signal processing and audio. Now that I&rsquo;m learning web development, I&rsquo;ve been eager to combine my skills and delve into Web Audio, an API that allows you to do audio processing magic in the browser. This API allows you to create websites like Soundcloud or even <a href="http://echonest.github.io/remix/">remix songs algorithmically</a>. I decided to create a basic drum machine, and then modify it to create a digital sequencer.</p>
 
 <p>I first followed this <a href="http://www.sitepoint.com/html5-web-audio-api-tutorial-building-virtual-synth-pad/">Virtual Synth</a> tutorial, which was a great place to start, but there were a few things I didn&rsquo;t like about it:</p>
@@ -276,8 +276,6 @@
 <li>Either I implemented the filter wrong, which is very possible, or it doesn&rsquo;t work correctly. It doesn&rsquo;t use a logarithmic scale, however, which is definitely a big mistake.</li>
 </ul>
 
-
-<p>As I was trying to figure out how to sequence audio events, I came upon a article that went slightly above my head when I first read it. In <a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">&ldquo;A Tale of Two Clocks&rdquo;</a>, the author makes it clear that you must synchronize to the Web Audio API clock, and not the Javascript clock, since the latter is imprecise. Even slight audio stuttering is very noticeable. The author links to a sequencer created by Google engineers, called <a href="http://chromium.googlecode.com/svn/trunk/samples/audio/shiny-drum-machine.html">Shiny Drum Machine</a>, which I used for reference. The code itself is good but not great, and could definitely be organized better.</p>
 
 <p>I threw a bunch of stuff together just to get a working app, but I think that my next step is definitely to pause for a moment and refactor.</p>
 
