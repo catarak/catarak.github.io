@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web Audio | Ear to the Bits]]></title>
   <link href="http:///blog/categories/web-audio/atom.xml" rel="self"/>
   <link href="http:///"/>
-  <updated>2014-12-06T16:47:42-05:00</updated>
+  <updated>2014-12-06T16:53:51-05:00</updated>
   <id>http:///</id>
   <author>
     <name><![CDATA[Cassie Tarakajian]]></name>
@@ -15,10 +15,10 @@
   
   <entry>
     <title type="html"><![CDATA[Web Audio Timing Tutorial]]></title>
-    <link href="http:///blog/2014/12/02/web-audio-sequencer-tutorial/"/>
+    <link href="http:///blog/2014/12/02/web-audio-timing-tutorial/"/>
     <updated>2014-12-02T22:56:24-05:00</updated>
-    <id>http:///blog/2014/12/02/web-audio-sequencer-tutorial</id>
-    <content type="html"><![CDATA[<p>My last post was a delirious declaration that I had finally made something with Web Audio. Now I want to explain how I did it. First, what is Web Audio, and why do we need it?</p>
+    <id>http:///blog/2014/12/02/web-audio-timing-tutorial</id>
+    <content type="html"><![CDATA[<p>My last post was a delirious declaration that I had finally made something with Web Audio. <a href="http://web-audio-sequencer.herokuapp.com/">Here it is</a>, a drum sequencer in the browser. Now I want to explain how I did it. First, what is Web Audio, and why do we need it?</p>
 
 <p>The Web Audio API is a versatile system for controlling audio in the web. It does this inside an <strong>audio context</strong>, which you declare as follows:</p>
 
@@ -160,7 +160,9 @@ if (rhythmIndex == LOOP_LENGTH) {
 
 <p>Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in <a href="http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api">this StackOverflow</a>, synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, this is only important if you want to synchronize animations to Web Audio. For that, you can read the last section in <a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">A Tale of Two Clocks</a>.</p>
 
-<p>Look out for a part two of this blog post, which will explain more in depth about <strong>audio routing graphs</strong>, and different types of nodes, i.e. how to add different types of effects.</p>
+<p>If you&rsquo;ve got this scheduling thing down, and want to learn how to integrate it into our own application, I recommend checking out my code at <a href="https://github.com/catarak/web-audio-sequencer">Github</a> to see how I did it.</p>
+
+<p>Thanks for reading, and look out for a part two of this blog post, which will explain more in depth about <strong>audio routing graphs</strong>, and different types of nodes, i.e. how to add different types of effects.</p>
 ]]></content>
   </entry>
   

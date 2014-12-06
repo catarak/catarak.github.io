@@ -10,7 +10,7 @@
 
   <!-- Causes trouble with per-article font implementations under /source/_includes/article.html
   
-  <meta name="description" content="Web Audio Timing Tutorial Dec 2nd, 2014 10:56 pm My last post was a delirious declaration that I had finally made something with Web Audio. Now I &hellip;">
+  <meta name="description" content="Web Audio Timing Tutorial Dec 2nd, 2014 10:56 pm My last post was a delirious declaration that I had finally made something with Web Audio. Here it &hellip;">
   &#8211;>
   
 
@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http:///blog/2014/12/02/web-audio-sequencer-tutorial">
+  <link rel="canonical" href="http:///blog/2014/12/02/web-audio-timing-tutorial">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Ear to the Bits" type="application/atom+xml">
@@ -106,7 +106,7 @@
   </header>
 
 
-<div class="entry-content" style="font-family: ; font-size: "><p>My last post was a delirious declaration that I had finally made something with Web Audio. Now I want to explain how I did it. First, what is Web Audio, and why do we need it?</p>
+<div class="entry-content" style="font-family: ; font-size: "><p>My last post was a delirious declaration that I had finally made something with Web Audio. <a href="http://web-audio-sequencer.herokuapp.com/">Here it is</a>, a drum sequencer in the browser. Now I want to explain how I did it. First, what is Web Audio, and why do we need it?</p>
 
 <p>The Web Audio API is a versatile system for controlling audio in the web. It does this inside an <strong>audio context</strong>, which you declare as follows:</p>
 
@@ -344,7 +344,9 @@
 
 <p>Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in <a href="http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api">this StackOverflow</a>, synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, this is only important if you want to synchronize animations to Web Audio. For that, you can read the last section in <a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">A Tale of Two Clocks</a>.</p>
 
-<p>Look out for a part two of this blog post, which will explain more in depth about <strong>audio routing graphs</strong>, and different types of nodes, i.e. how to add different types of effects.</p>
+<p>If you&rsquo;ve got this scheduling thing down, and want to learn how to integrate it into our own application, I recommend checking out my code at <a href="https://github.com/catarak/web-audio-sequencer">Github</a> to see how I did it.</p>
+
+<p>Thanks for reading, and look out for a part two of this blog post, which will explain more in depth about <strong>audio routing graphs</strong>, and different types of nodes, i.e. how to add different types of effects.</p>
 </div>
 
 
@@ -352,7 +354,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http:///blog/2014/12/02/web-audio-sequencer-tutorial/" data-via="hellothisiscass" data-counturl="http:///blog/2014/12/02/web-audio-sequencer-tutorial/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http:///blog/2014/12/02/web-audio-timing-tutorial/" data-via="hellothisiscass" data-counturl="http:///blog/2014/12/02/web-audio-timing-tutorial/" >Tweet</a>
   
   
   
