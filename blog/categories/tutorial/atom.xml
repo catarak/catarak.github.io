@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Web Audio | Ear to the Bits]]></title>
-  <link href="http:///blog/categories/web-audio/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Tutorial | Ear to the Bits]]></title>
+  <link href="http:///blog/categories/tutorial/atom.xml" rel="self"/>
   <link href="http:///"/>
   <updated>2014-12-06T16:47:42-05:00</updated>
   <id>http:///</id>
@@ -161,31 +161,6 @@ if (rhythmIndex == LOOP_LENGTH) {
 <p>Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in <a href="http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api">this StackOverflow</a>, synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, this is only important if you want to synchronize animations to Web Audio. For that, you can read the last section in <a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">A Tale of Two Clocks</a>.</p>
 
 <p>Look out for a part two of this blog post, which will explain more in depth about <strong>audio routing graphs</strong>, and different types of nodes, i.e. how to add different types of effects.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Build a Drum Machine in Your Browser]]></title>
-    <link href="http:///blog/2014/11/30/decoding-web-audio/"/>
-    <updated>2014-11-30T18:51:53-05:00</updated>
-    <id>http:///blog/2014/11/30/decoding-web-audio</id>
-    <content type="html"><![CDATA[<p>In my college career, I majored in electrical engineering, and because of this, I learned about signal processing and audio. Now that I&rsquo;m learning web development, I&rsquo;ve been eager to combine my skills and delve into Web Audio, an API that allows you to do audio processing magic in the browser. This API allows you to create websites like Soundcloud or even <a href="http://echonest.github.io/remix/">remix songs algorithmically</a>. I decided to create a basic drum machine, and then modify it to create a digital sequencer.</p>
-
-<p>I first followed this <a href="http://www.sitepoint.com/html5-web-audio-api-tutorial-building-virtual-synth-pad/">Virtual Synth</a> tutorial, which was a great place to start, but there were a few things I didn&rsquo;t like about it:</p>
-
-<ul>
-<li>No ability to create a sequence. What good is a drum machine without a sequencer (<a href="https://www.youtube.com/watch?v=wXRnbS6o64U">unless you&rsquo;re Araabmuzik</a>)?</li>
-<li>Either I implemented the filter wrong, which is very possible, or it doesn&rsquo;t work correctly. It doesn&rsquo;t use a logarithmic scale, however, which is definitely a big mistake.</li>
-</ul>
-
-
-<p>As I was trying to figure out how to sequence audio events, I came upon a article that went slightly above my head when I first read it. In <a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">&ldquo;A Tale of Two Clocks&rdquo;</a>, the author makes it clear that you must synchronize to the Web Audio API clock, and not the Javascript clock, since the latter is imprecise. Even slight audio stuttering is very noticeable. The author links to a sequencer created by Google engineers, called <a href="http://chromium.googlecode.com/svn/trunk/samples/audio/shiny-drum-machine.html">Shiny Drum Machine</a>, which I used for reference. The code itself is good but not great, and could definitely be organized better.</p>
-
-<p>I threw a bunch of stuff together just to get a working app, but I think that my next step is definitely to pause for a moment and refactor.</p>
-
-<p>I will write a tutorial in the future for this, but for now, since my brains hurts a lot, you can check out the current version of my <a href="http://web-audio-sequencer.herokuapp.com/">Web Audio Sequencer</a>. And, of course, check out <a href="https://github.com/catarak/web-audio-sequencer">my Github</a> if you want to look at the code (<a href="https://github.com/catarak/web-audio-sequencer/commit/3f4a2f08f7f84acfc85297a626ce9286a43034d6">latest commit as writing this post</a>).</p>
-
-<p><img class="center <a" src="href="http://media.giphy.com/media/vFtWp05vBYnMQ/giphy.gif">http://media.giphy.com/media/vFtWp05vBYnMQ/giphy.gif</a>&#8221;></p>
 ]]></content>
   </entry>
   

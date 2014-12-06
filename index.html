@@ -10,7 +10,7 @@
 
   <!-- Causes trouble with per-article font implementations under /source/_includes/article.html
   
-  <meta name="description" content="Build a Drum Machine in Your Browser Nov 30th, 2014 6:51 pm In my college career, I majored in electrical engineering, and because of this, I &hellip;">
+  <meta name="description" content="Web Audio Timing Tutorial Dec 2nd, 2014 10:56 pm My last post was a delirious declaration that I had finally made something with Web Audio. Now I &hellip;">
   &#8211;>
   
 
@@ -87,6 +87,273 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title" style="font-family: "><a href="/blog/2014/12/02/web-audio-sequencer-tutorial/">Web Audio Timing Tutorial</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-02T22:56:24-05:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>10:56 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content" style="font-family: ; font-size: "><p>My last post was a delirious declaration that I had finally made something with Web Audio. Now I want to explain how I did it. First, what is Web Audio, and why do we need it?</p>
+
+<p>The Web Audio API is a versatile system for controlling audio in the web. It does this inside an <strong>audio context</strong>, which you declare as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioContext</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You then create sources, either by loading a song or sample via an AJAX request (though you can&rsquo;t use jQuery since it doesn&rsquo;t support responses of type &lsquo;arrayBuffer&rsquo;:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">songBuffer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//for multiple browser support</span>
+</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">AudioContext</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">AudioContext</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">webkitAudioContext</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioContext</span><span class="p">();</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">loadSong</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// the url can be full path or relative</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">request</span><span class="p">.</span><span class="nx">responseType</span> <span class="o">=</span> <span class="s1">&#39;arraybuffer&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Decode asynchronously</span>
+</span><span class='line'>  <span class="nx">request</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">context</span><span class="p">.</span><span class="nx">decodeAudioData</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">response</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">songBuffer</span> <span class="o">=</span> <span class="nx">buffer</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">},</span> <span class="nx">onError</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once you have sources, you route sounds through a series of <strong>audio nodes</strong> to add effects, such as reverb, filtering, and compression. It is also <strong>modular</strong>, meaning it is simple to change the routes to add or remove effects. It is analogous to physical synthesizers and modular synthesizers. The last node in the <strong>audio routing graph</strong> is the destination node, which is responsible for actually <em>playing</em> the sounds. Here&rsquo;s a routing example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">playSound</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// creates a sound source from buffer just loaded</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createBufferSource</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">source</span><span class="p">.</span><span class="nx">buffer</span> <span class="o">=</span> <span class="nx">buffer</span><span class="p">;</span>                    <span class="c1">// tell the source which sound to play</span>
+</span><span class='line'>  <span class="nx">source</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">);</span>       <span class="c1">// connect source to context&#39;s destination (the speakers)</span>
+</span><span class='line'>  <span class="nx">source</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>                           <span class="c1">// play the source now</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cool, so now we can play audio. As soon as I figured out how to do this, the first thing I wanted to learn how to do is how to sequence audio events, because that&rsquo;s how you making music: you organize sounds in time. This is a deep, dark rabbit hole. On the <a href="http://www.html5rocks.com/en/tutorials/webaudio/intro/">introduction to Web Audio tutorial</a>, they have an example which synchronizing to the Javascript clock. But this is bad. <em>Very</em> bad. The Javascript clock is not precise, and therefore if you synchronize audio events to it, there will be noticeable latency and stuttering. You must synchronize to the Web Audio clock, which is a signal from an actual hardware crystal (and therefore very precise).</p>
+
+<p>Another problem is scheduling. Web Audio has no built in scheduler. Therefore, you have to build your own (or use a library that has one, for example, <a href="https://www.npmjs.org/package/waaclock">WAAClock</a> or <a href="https://github.com/CreateJS/SoundJS">SoundJS</a>). You also have to think how far ahead you want to schedule your audio events. For example, if you have the code (which is synchronized to the Javascript clock)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">bar</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">bar</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">startTime</span> <span class="o">+</span> <span class="nx">bar</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">*</span> <span class="nx">eighthNoteTime</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Play the hi-hat every eighth note.</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">playSound</span><span class="p">(</span><span class="nx">hihat</span><span class="p">,</span> <span class="nx">time</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">*</span> <span class="nx">eighthNoteTime</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and you want to change tempo, what do you do? You can&rsquo;t unschedule the notes once you&rsquo;ve told them to play. You would have to add a gain node to control the volume, turn off the volume on the now off-tempo loop, and then create a <em>new</em> loop with the new correct tempo. And ad infinitum every time you want to change the tempo again.</p>
+
+<p>That&rsquo;s awful, and there is a better way. After reading <a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">A Tale of Two Clocks</a> a few times until it finally made sense. The way to make a good scheduler is to schedule one note ahead of time, and to synchronize it to the Web Audio clock. Unfortunately, it&rsquo;s easier said than done. Your scheduler function ends up looking something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">while</span> <span class="p">(</span><span class="nx">nextNoteTime</span> <span class="o">&lt;</span> <span class="nx">audioContext</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">+</span> <span class="nx">scheduleAheadTime</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">scheduleNote</span><span class="p">(</span> <span class="nx">current16thNote</span><span class="p">,</span> <span class="nx">nextNoteTime</span> <span class="p">);</span>
+</span><span class='line'>  <span class="nx">nextNote</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But scheduleAheadTime and nextNoteTime have to be tweaked according to your use case. In my case, I ended up using the same parameters as used in the <a href="http://chromium.googlecode.com/svn/trunk/samples/audio/shiny-drum-machine.html">Google Shiny Drum Machine</a> and it seems to be okay. Let&rsquo;s look at my code for the core scheduling functionality:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">handlePlay</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">noteTime</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">startTime</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">schedule</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">schedule</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// The sequence starts at startTime, so normalize currentTime so that it&#39;s 0 at the start of the sequence.</span>
+</span><span class='line'>  <span class="nx">currentTime</span> <span class="o">-=</span> <span class="nx">startTime</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="nx">noteTime</span> <span class="o">&lt;</span> <span class="nx">currentTime</span> <span class="o">+</span> <span class="mf">0.200</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">contextPlayTime</span> <span class="o">=</span> <span class="nx">noteTime</span> <span class="o">+</span> <span class="nx">startTime</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//Insert playing notes here</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//Insert draw stuff here</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">advanceNote</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">timeoutId</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="s2">&quot;schedule()&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">advanceNote</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Setting tempo to 60 BPM just for now</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">tempo</span> <span class="o">=</span> <span class="mf">60.0</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">secondsPerBeat</span> <span class="o">=</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="nx">tempo</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">rhythmIndex</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">rhythmIndex</span> <span class="o">==</span> <span class="nx">LOOP_LENGTH</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">rhythmIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//0.25 because each square is a 16th note</span>
+</span><span class='line'>    <span class="nx">noteTime</span> <span class="o">+=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="nx">secondsPerBeat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Okay, there&rsquo;s a lot going on here, so let&rsquo;s break this down. Note that I didn&rsquo;t include anything about playing notes or updating the visuals as I just wanted to focus on the timing/scheduling.</p>
+
+<p>First, in handlePlay(), we reset noteTime, which represents the length of a note. And then we set startTime, which includes an offset to take into account stuff happening in the main Javascript execution time (e.g. garbage collection).</p>
+
+<p>Then, in schedule, we first check if we need to sequence audio events, depending on noteTime and currentTime. Note that the 200 ms offset here represents the variable scheduleAheadTime in the previous example. The while loop inside of the function schedule() is run again and again until we&rsquo;ve scheduled all notes that fall within our lookahead interval. Therefore, as we schedule more notes, and increment noteTime based on the tempo of the song (in advanceNote()):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">secondsPerBeat</span> <span class="o">=</span> <span class="mf">60.0</span> <span class="o">/</span> <span class="nx">tempo</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//...</span>
+</span><span class='line'><span class="nx">noteTime</span> <span class="o">+=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="nx">secondsPerBeat</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since we&rsquo;re assuming a 4/4 time signature, to obtain noteTime we multipy secondsPerBeat by 0.25 since each note is a 16th note. Once we&rsquo;ve scheduled all of the notes that fall within our lookahead interval, the condition of the while loop in schedule()</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">while</span> <span class="p">(</span><span class="nx">noteTime</span> <span class="o">&lt;</span> <span class="nx">currentTime</span> <span class="o">+</span> <span class="mf">0.200</span><span class="p">)</span> <span class="p">{</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>will fail. Lastly, what&rsquo;s with the last line of schedule()?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">timeoutId</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="s2">&quot;schedule()&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>setTimeout is a Javascript library function that executes a function after a certain period of time. Therefore, this tells Javascript to call the schedule() function after 0 ms. So basically, call schedule() again right after it&rsquo;s scheduled all notes within out lookahead interval and begin the process over again.</p>
+
+<p>Lastly, there&rsquo;s the rhythmIndex variable in advanceNote():</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">rhythmIndex</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">rhythmIndex</span> <span class="o">==</span> <span class="nx">LOOP_LENGTH</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">rhythmIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This variable simply represents where you are in the context of the loop, and resets when the sequence reaches then end so that it loops.</p>
+
+<p>Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in <a href="http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api">this StackOverflow</a>, synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, this is only important if you want to synchronize animations to Web Audio. For that, you can read the last section in <a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">A Tale of Two Clocks</a>.</p>
+
+<p>Look out for a part two of this blog post, which will explain more in depth about <strong>audio routing graphs</strong>, and different types of nodes, i.e. how to add different types of effects.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
