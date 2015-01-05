@@ -10,7 +10,7 @@
 
   <!-- Causes trouble with per-article font implementations under /source/_includes/article.html
   
-  <meta name="description" content="Web Audio Timing Tutorial Dec 2nd, 2014 10:56 pm My last post was a delirious declaration that I had finally made something with Web Audio. Here it &hellip;">
+  <meta name="description" content="Solving Tic-Tac-Toe Jan 4th, 2015 3:09 pm A few months ago, when I had decided that I wanted to quit my job as a C++ developer and become a web &hellip;">
   &#8211;>
   
 
@@ -87,6 +87,502 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title" style="font-family: "><a href="/blog/2015/01/04/solving-tic-tac-toe/">Solving Tic-Tac-Toe</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-04T15:09:10-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:09 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content" style="font-family: ; font-size: "><p>A few months ago, when I had decided that I wanted to quit my job as a C++ developer and become a web developer, I applied to the <a href="http://flatironschool.com/">Flatiron School</a> to immerse myself in web technologies. During the application process, I was assigned a code challenge, to create a game of Tic-Tac-Toe, played either by two humans or a human against an AI player, in the language of my choosing. To challenge myself, I chose Ruby, a language I had never used before but figured that there was never a better moment to start. I applied all of the object-oriented programming fundamentals I knew from my time coding in C++ and Java, and ended up with somethiing I was pretty proud of.</p>
+
+<h2>Refactoring</h2>
+
+<p>After the class was over, only four months after I wrote my first Ruby code, I went back to build upon what I had previously done. It&rsquo;s fun to see how much better you&rsquo;ve gotten at something, in my opinion. It was funny to see all of the non-Rubylike things I had done:</p>
+
+<ul>
+<li>Accessing data elements outside of a class&rsquo;s initialize method. For example, inside of my <code>Board</code> class:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@board</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">mark</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This I changed to</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">mark</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Using explicit return statements at the end of methods. I was used to the world of C++ in which best practice is to be as explicit as possible, otherwise your code is really difficult to read. Again, from the <code>Board</code> class:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="vi">@board</span><span class="o">[</span><span class="n">index</span><span class="o">]</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I changed this method to</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">index</span><span class="o">]</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Unconventional method naming. What was with the question marks and exclamation points? I had written stuff like this (from <code>Board</code> class again):</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="vi">@board</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;X&#39;</span> <span class="o">||</span> <span class="vi">@board</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;O&#39;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>   <span class="k">return</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also, what&rsquo;s with those if and else statements? I was used to the C++ world in which that kind of logic ends up so verbose. I fixed it to look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">valid?</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">!</span><span class="nb">self</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">index</span><span class="o">].</span><span class="n">nil?</span> <span class="o">&amp;&amp;</span> <span class="nb">self</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">!=</span> <span class="s1">&#39;X&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">self</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">!=</span> <span class="s1">&#39;O&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Much more compact and readable, and better error checking!</p>
+
+<h2>Designing an AI</h2>
+
+<p>Once I had fixed my code to fit with Ruby conventions, I had a larger task to accomplish: make the AI unbeatable. I felt confident, as I had <a href="https://github.com/catarak/battleship">written an AI before for Battleship</a>. However, it turns out that designing a Battleship strategy is different from Tic-Tac-Toe. A lot different, in fact, and it tripped me up.</p>
+
+<p>When I designed the AI for Battleship, I created a board of probabilites, based on the likelihood of a ship being in a certain position on the board. I tried to do the same for Tic-Tac-Toe, even creating a <code>ProbabilitiesBoard</code> class that was initialized to look like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>      <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>   <span class="mi">3</span>  <span class="o">|</span>  <span class="mi">2</span>  <span class="o">|</span>  <span class="mi">3</span>
+</span><span class='line'> <span class="n">_</span> <span class="n">_</span> <span class="n">_</span><span class="o">|</span><span class="n">_</span> <span class="n">_</span> <span class="n">_</span><span class="o">|</span><span class="n">_</span> <span class="n">_</span> <span class="n">_</span>
+</span><span class='line'>      <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>   <span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">2</span>
+</span><span class='line'> <span class="n">_</span> <span class="n">_</span> <span class="n">_</span><span class="o">|</span><span class="n">_</span> <span class="n">_</span> <span class="n">_</span><span class="o">|</span><span class="n">_</span> <span class="n">_</span> <span class="n">_</span>
+</span><span class='line'>      <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>   <span class="mi">3</span>  <span class="o">|</span>  <span class="mi">2</span>  <span class="o">|</span>  <span class="mi">3</span>
+</span><span class='line'>      <span class="o">|</span>     <span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>in which each number represents the number of different ways a player can win, based on the number of rows that interesect a position. Unfortunately, as I played out a few games and tried to recalculate my probabilities, I realised my calculation wasn&rsquo;t robust enough. It didn&rsquo;t take into account enough different possibilites of gameplay. Because, in Tic-Tac-Toe, unlike Battleship, you also have to block another player.</p>
+
+<h2>Tic-Tac-Toe is not like Battleship</h2>
+
+<p>So I was back to square one. I started to think about the game in certain types of moves. Certain moves won the game by making three in a row, certain moves blocked another player, certain moves created a dual threat, and so on. I had distilled the types of moves into a hierarchy as well, which looked something like this:</p>
+
+<ol>
+<li>If you have two in a row, add a third to the row to win the game.</li>
+<li>If your opponent has two in a row, add a third to the row to block him or her from winning.</li>
+<li>Place your mark on the board strategically, bringing you closer to winning.</li>
+</ol>
+
+
+<p>This was something. I quickly implemented two methods in the <code>ComputerPlayer</code> class, <code>find_winning_move</code> and <code>find_blocking_move</code>. Because I found that I need to iterate over all of the different rows in the board, I decided to store them in my <code>Board</code> class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Board</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:board</span>
+</span><span class='line'>  <span class="kp">attr_reader</span> <span class="ss">:rows</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="vi">@board</span> <span class="o">=</span> <span class="n">position_numbers</span>
+</span><span class='line'>    <span class="vi">@rows</span> <span class="o">=</span> <span class="o">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>             <span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="o">]]</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">position_numbers</span>
+</span><span class='line'>    <span class="k">return</span> <span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Now, I could iterate though all of the rows and see if any of them had two &lsquo;X&rsquo;s or &#8216;O&rsquo;s in a row:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">find_two_in_a_row</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">board</span><span class="o">.</span><span class="n">rows</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">only_two_in_a_row?</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">board</span><span class="o">.</span><span class="n">get_open_position</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="kp">nil</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you see, I created a separate method in the <code>ComputerPlayer</code> class called <code>find_two_in_a_row</code>, which iterates though all of the rows and tries to find two in a row of a mark passed in as a parameter. As soon as it finds a row, it returns with the empty position in the row.</p>
+
+<h2>A Hierarchical Strategy</h2>
+
+<p>I had created two crucial methods whith made the AI a lot smarter, but I was lost on the rest of the strategy. I decided to ask the Internet for some inspiration, and I found some help on <a href="http://www.wikihow.com/Win-at-Tic-Tac-Toe">Wikihow</a> and <a href="http://www.quora.com/Is-there-a-way-to-never-lose-at-Tic-Tac-Toe">Quora</a>. However, I found it difficult to find patterns. I didn&rsquo;t want to add a lot of <code>if</code> and <code>else</code> statements which check for things like &ldquo;if the AI player went first and then the opponent moved in a corner&rdquo; then &ldquo;the AI player should put a mark in the opposite corner&rdquo;. It didn&rsquo;t feel right, and I felt like I could do better.</p>
+
+<p>I had an aha moment when I came across <a href="http://programmers.stackexchange.com/a/213570">this answer to a StackExchange question</a>. It states that a Tic-Tac-Toe strategy is based on a hierarchy of types of moves. Of course! I had gotten halfway there when I realized that winning was more important than blocking which was more important that other types of moves, but I hadn&rsquo;t been able to pin down the other types of moves. The hierarchy of moves is</p>
+
+<blockquote><p><strong>The following algorithm will allow you (or the AI) to always deny your opponent victory:</strong></p>
+
+<p><strong>Win:</strong>
+If you have two in a row, you can place a third to get three in a row.</p>
+
+<p><strong>Block:</strong>
+If the opponent has two in a row, you must play the third to block the opponent.</p>
+
+<p><strong>Fork:</strong>
+Create an opportunity where you have two threats to win (two non-blocked lines of 2).</p>
+
+<p><strong>Blocking an opponent&rsquo;s fork:</strong>
+If there is a configuration where the opponent can fork, you must block that fork.</p>
+
+<p><strong>Center:</strong>
+You play the center if open.</p>
+
+<p><strong>Opposite corner:</strong>
+If the opponent is in the corner, you play the opposite corner.</p>
+
+<p><strong>Empty corner:</strong>
+You play in a corner square.</p>
+
+<p><strong>Empty side:</strong>
+You play in a middle square on any of the 4 sides.</p>
+
+<p><em>Pick the highest possible on the list</em></p></blockquote>
+
+<p>I was able to knock out most of these methods pretty quickly, except for finding forks and blocking an opponent&rsquo;s forks. These turned out to be trickier than I expected.</p>
+
+<h2>Finding Forks</h2>
+
+<p>In the case of finding a fork, I realized that a player only needed to find one in order to create a dual threat (and therefore win the game). I managed to map out an algorithm:</p>
+
+<p>Iterate through all rows on the board
+  if a row contained only one of the player&rsquo;s mark, and nothing else,
+  then iterate thorough all overlapping rows
+    if an overlapping row contained only one of the player&rsquo;s mark, and nothing else
+      if it&rsquo;s not the position in which the two rows overlap,
+      then you&rsquo;ve found a fork
+        return the position in which the two rows overlap</p>
+
+<p>I already knew how to iterate though all of the rows, but how do you find all of the overlapping rows? It turns out this is easier than I expected. I wrote a method for the <code>Board</code> class called <code>overlapping_rows</code> which takes a row as a parameter.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">overlapping_rows</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">rows</span><span class="o">.</span><span class="n">select</span><span class="p">{</span> <span class="o">|</span><span class="n">overlap</span><span class="o">|</span> <span class="p">(</span><span class="n">overlap</span> <span class="o">&amp;</span> <span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">overlap</span> <span class="o">!=</span> <span class="n">row</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All this method does is select the rows that contain a position that is also in the row passed in, just as long as it is not the same row. The actual code in the <code>ComputerPlayer</code> class ended up looking like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">find_winning_fork_move</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">board</span><span class="o">.</span><span class="n">rows</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">only_one_in_a_row?</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">overlaps</span> <span class="o">=</span> <span class="n">board</span><span class="o">.</span><span class="n">overlapping_rows</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">overlaps</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">overlap</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">only_one_in_a_row?</span><span class="p">(</span><span class="n">overlap</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">overlapping_move</span> <span class="o">=</span> <span class="p">(</span><span class="n">overlap</span> <span class="o">&amp;</span> <span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">overlapping_move</span> <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">valid?</span><span class="p">(</span><span class="n">overlapping_move</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="kp">nil</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The method returns the position to create a fork as soon as it finds the first fork.</p>
+
+<h2>Blocking All Forks, Not Just One</h2>
+
+<p>At first, I thought that after I had implemented a method that created forks, I could use the same code to block forks. I figured out there was a problem when I was testing with the following game:</p>
+
+<div style="text-align: center">
+<img src="/images/tic_tac_toe/tricky_fork_caption.001.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+<img src="/images/tic_tac_toe/tricky_fork_caption.002.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+<img src="/images/tic_tac_toe/tricky_fork_caption.003.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+</div>
+
+
+<div style="text-align: center">
+<img src="/images/tic_tac_toe/tricky_fork_caption.004.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+<img src="/images/tic_tac_toe/tricky_fork_caption.005.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+</div>
+
+
+<p>In the process of blocking one fork, the AI had left another one open. Therefore, it wasn&rsquo;t just as simple as finding the first fork. The AI had to find them all, and then choose the optimal place to block. First, finding all forks:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">find_possible_forks</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">possible_forks</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>  <span class="n">board</span><span class="o">.</span><span class="n">rows</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">only_one_in_a_row?</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">overlaps</span> <span class="o">=</span> <span class="n">board</span><span class="o">.</span><span class="n">overlapping_rows</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">overlaps</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">overlap</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">only_one_in_a_row?</span><span class="p">(</span><span class="n">overlap</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">overlapping_move</span> <span class="o">=</span> <span class="p">(</span><span class="n">overlap</span> <span class="o">&amp;</span> <span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'>          <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">valid?</span><span class="p">(</span><span class="n">overlapping_move</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">possible_forks</span> <span class="o">&lt;&lt;</span> <span class="o">[</span><span class="n">row</span><span class="p">,</span> <span class="n">overlap</span><span class="o">]</span>
+</span><span class='line'>          <span class="k">end</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">possible_forks</span><span class="o">.</span><span class="n">each</span><span class="p">{</span> <span class="o">|</span><span class="nb">fork</span><span class="o">|</span> <span class="nb">fork</span><span class="o">.</span><span class="n">sort!</span> <span class="p">}</span><span class="o">.</span><span class="n">uniq</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The only problem with this method is that as it iterates over all rows, it inserts duplicate forks in a different order. Thus, the last line of the method removes these duplicates.</p>
+
+<p>Then, I had to figure out a way to pick the proper blocking spot. I tried things like finding the position that occurs the most in the rows, but it turns out there was no correlation. I finally realized that the way to find the proper blocking move is to look ahead, by checking all moves that would block a fork. I did this in a method called <code>select_blocking_fork_move</code>, which takes a list of possible forks as a parameter. The line</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">possible_moves</span> <span class="o">=</span> <span class="n">possible_forks</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">uniq</span><span class="o">.</span><span class="n">select</span><span class="p">{</span> <span class="o">|</span><span class="n">index</span><span class="o">|</span> <span class="n">board</span><span class="o">.</span><span class="n">valid?</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>creates an array of possible moves by selecting all position on the board that are open and are on the forking rows.</p>
+
+<p>Then, while iterating over all possible moves, the AI had to look ahead. The possible move is placed on a copy of the board</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">possible_moves</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">move</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">test_board</span> <span class="o">=</span> <span class="no">Marshal</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="no">Marshal</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">board</span><span class="p">))</span>
+</span><span class='line'>  <span class="n">test_board</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and then, the AI checks for one of two scenarios. First, it checks that if the blocking move creates two in a row, and then the opponent moves to block, it doesn&rsquo;t create another fork for the opponent. That&rsquo;s a lot, but I think it makes more sense if you look at the code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">opponent_move</span> <span class="o">=</span> <span class="n">find_winning_move</span><span class="p">(</span><span class="n">test_board</span><span class="p">)</span>
+</span><span class='line'><span class="k">if</span> <span class="n">opponent_move</span>
+</span><span class='line'>  <span class="n">test_board</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">opponent_move</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">!</span><span class="n">contains_fork?</span><span class="p">(</span><span class="n">test_board</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">move</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you see, I wrote a method called <code>contains_fork?</code> which checks the board for forks. The else statement within the loop checks if the possible move does, in fact, block all possible forks:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">opponent_move</span> <span class="o">=</span> <span class="n">find_winning_move</span><span class="p">(</span><span class="n">test_board</span><span class="p">)</span>
+</span><span class='line'><span class="k">if</span> <span class="n">opponent_move</span>
+</span><span class='line'>  <span class="n">test_board</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">opponent_move</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="n">test_board</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">opponent_move</span><span class="p">,</span> <span class="p">(</span><span class="n">opponent_move</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">find_possible_forks</span><span class="p">(</span><span class="n">test_board</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">move</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The body of the else statement first removes the test opponent mark that had been put on the board, and then checks if there are any possible forks. If there aren&rsquo;t, even though this move doesn&rsquo;t create two in a row, it blocks the opponent from creating a fork.</p>
+
+<p>And then, putting it all together:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">select_blocking_fork_move</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">possible_forks</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">possible_moves</span> <span class="o">=</span> <span class="n">possible_forks</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">uniq</span><span class="o">.</span><span class="n">select</span><span class="p">{</span> <span class="o">|</span><span class="n">index</span><span class="o">|</span> <span class="n">board</span><span class="o">.</span><span class="n">valid?</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">possible_moves</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">move</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">test_board</span> <span class="o">=</span> <span class="no">Marshal</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="no">Marshal</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">board</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">test_board</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">opponent_move</span> <span class="o">=</span> <span class="n">find_winning_move</span><span class="p">(</span><span class="n">test_board</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">opponent_move</span>
+</span><span class='line'>      <span class="n">test_board</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">opponent_move</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">!</span><span class="n">contains_fork?</span><span class="p">(</span><span class="n">test_board</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">move</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="n">test_board</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">opponent_move</span><span class="p">,</span> <span class="p">(</span><span class="n">opponent_move</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">find_possible_forks</span><span class="p">(</span><span class="n">test_board</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">opponent_mark</span><span class="p">)</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">move</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="kp">nil</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Check Out My Code</h2>
+
+<p>Now you know how to solve Tic-Tac-Toe! Yay!</p>
+
+<p>If you want to try to find possible flaws in my logic, or look more at my implementation of Tic-Tac-Toe, please check out the <a href="https://github.com/catarak/tic-tac-toe/">Github repository</a>. Or, if you know of a better way to solve this, let me know.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1090,7 +1586,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Website copyright &copy; 2014 - Cassie Tarakajian |
+  Website copyright &copy; 2015 - Cassie Tarakajian |
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/TheChymera/Koenigspress">Königspress</a></span>
 </p>
 
