@@ -572,6 +572,47 @@ You play in a middle square on any of the 4 sides.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h2>Pitfalls</h2>
+
+<p>Of course, there are some things that I&rsquo;m not happy about in terms of how my code turned out.</p>
+
+<ul>
+<li>Breaking from loops using return statements
+For this project, I am a big offender of breaking out of loops using a return statement. For example, from my <code>ComputerPlayer</code> class:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">find_two_in_a_row</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">board</span><span class="o">.</span><span class="n">rows</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">only_two_in_a_row?</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">mark</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">board</span><span class="o">.</span><span class="n">get_open_position</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="kp">nil</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s not very Ruby-like, I know. Because of my C++ and Java background, in which it&rsquo;s totally kosher to do that, it is one of my first instincts. I did try to refactor and figure out another way, but I think the way I have it now is the most clear, at least to me.</p>
+
+<ul>
+<li><p>Command-line interface
+I find it to be a little annoying to use. I guess I could refactor it to be a web application, but that&rsquo;s a lot more work, and the point of this was to create an unbeatable AI.</p></li>
+<li><p>Storing rows in <code>Board</code> class
+The &ldquo;row&rdquo; is the only part of this application that&rsquo;s not object-oriented, which I&rsquo;m not happy about. In my case, a row is an array of length three that holds three positions on the board. I hardcoded these values and stored them as part of the board. I also dislike how the method <code>overlapping_rows</code> takes a row as an argument, which is just an array. It&rsquo;s just not right.</p></li>
+</ul>
+
+
+<p>In the future, I would figure out how to make a row an object and not just data.</p>
+
 <h2>Check Out My Code</h2>
 
 <p>Now you know how to solve Tic-Tac-Toe! Yay!</p>
