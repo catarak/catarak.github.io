@@ -188,11 +188,15 @@ The method returns the position to create a fork as soon as it finds the first f
 
 At first, I thought that after I had implemented a method that created forks, I could use the same code to block forks. I figured out there was a problem when I was testing with the following game:
 
-<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.001.jpg" width="300" />
-<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.002.jpg" width="300" />
-<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.003.jpg" width="300" />
-<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.004.jpg" width="300" />
-<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.005.jpg" width="300" />
+<div style="text-align: center">
+<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.001.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.002.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.003.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+</div>
+<div style="text-align: center">
+<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.004.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+<img src="{{ root_url }}/images/tic_tac_toe/tricky_fork_caption.005.jpg" width="250" style="display: inline-block; margin: 0 auto;"/>
+</div>
 
 In the process of blocking one fork, the AI had left another one open. Therefore, it wasn't just as simple as finding the first fork. The AI had to find them all, and then choose the optimal place to block. First, finding all forks:
 ```
