@@ -286,6 +286,33 @@ def select_blocking_fork_move(board, possible_forks)
 end
 ```
 
+##Pitfalls
+
+Of course, there are some things that I'm not happy about in terms of how my code turned out. 
+
+* Breaking from loops using return statements
+For this project, I am a big offender of breaking out of loops using a return statement. For example, from my ```ComputerPlayer``` class:
+```ruby
+def find_two_in_a_row(board, mark)
+  board.rows.each do |row|
+    if board.only_two_in_a_row?(row, mark)
+      return board.get_open_position(row)
+    end
+  end
+  nil 
+end
+```
+It's not very Ruby-like, I know. Because of my C++ and Java background, in which it's totally kosher to do that, it is one of my first instincts. I did try to refactor and figure out another way, but I think the way I have it now is the most clear, at least to me. 
+
+* Command-line interface
+I find it to be a little annoying to use. I guess I could refactor it to be a web application, but that's a lot more work, and the point of this was to create an unbeatable AI.
+
+
+* Storing rows in ```Board``` class
+The "row" is the only part of this application that's not object-oriented, which I'm not happy about. In my case, a row is an array of length three that holds three positions on the board. I hardcoded these values and stored them as part of the board. I also dislike how the method ```overlapping_rows``` takes a row as an argument, which is just an array. It's just not right.
+
+In the future, I would figure out how to make a row an object and not just data. 
+
 ##Check Out My Code
 
 Now you know how to solve Tic-Tac-Toe! Yay!
