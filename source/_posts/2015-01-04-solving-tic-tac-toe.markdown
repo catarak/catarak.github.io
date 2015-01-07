@@ -317,7 +317,7 @@ In the future, I would figure out how to make a row an object and not just data.
 
 Now you know how to solve Tic-Tac-Toe! Yay!
 
-If you want to try to find possible flaws in my logic, or look more at my implementation of Tic-Tac-Toe, please check out the [Github repository](https://github.com/catarak/tic-tac-toe/). Or, if you know of a better way to solve this, let me know.
+If you want to try to find possible flaws in my logic, or look more at my implementation of Tic-Tac-Toe, please check out the `heuristic-solution` branch on my [Github repository](https://github.com/catarak/tic-tac-toe/). Or, if you know of a better way to solve this, let me know.
 
 
 
