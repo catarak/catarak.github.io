@@ -49,7 +49,7 @@ function playSound(buffer) {
 }
 ```
 
-Cool, so now we can play audio. As soon as I figured out how to do this, the first thing I wanted to learn how to do is how to sequence audio events, because that's how you making music: you organize sounds in time. This is a deep, dark rabbit hole. On the [introduction to Web Audio tutorial](http://www.html5rocks.com/en/tutorials/webaudio/intro/), they have an example which synchronizing to the Javascript clock. But this is bad. _Very_ bad. The Javascript clock is not precise, and therefore if you synchronize audio events to it, there will be noticeable latency and stuttering. You must synchronize to the Web Audio clock, which is a signal from an actual hardware crystal (and therefore very precise). 
+Cool, so now we can play audio. As soon as I figured out how to do this, the first thing I wanted to learn how to do is how to sequence audio events, because that's how you make music: you organize sounds in time. This is a deep, deep rabbit hole. On the [introduction to Web Audio tutorial](http://www.html5rocks.com/en/tutorials/webaudio/intro/), they have an example which synchronizes to the Javascript clock. But this is bad. _Very_ bad. The Javascript clock is not precise, and therefore if you synchronize audio events to it, there will be noticeable latency and stuttering. You must synchronize to the Web Audio clock, which is a signal from an actual hardware crystal on your computer (and therefore very precise). 
 
 Another problem is scheduling. Web Audio has no built in scheduler. Therefore, you have to build your own (or use a library that has one, for example, [WAAClock](https://www.npmjs.org/package/waaclock) or [SoundJS](https://github.com/CreateJS/SoundJS)). You also have to think how far ahead you want to schedule your audio events. For example, if you have the code (which is synchronized to the Javascript clock)
 
@@ -69,7 +69,7 @@ and you want to change tempo, what do you do? You can't unschedule the notes onc
 That's awful, and there is a better way. After reading [A Tale of Two Clocks](http://www.html5rocks.com/en/tutorials/audio/scheduling/) a few times until it finally made sense. The way to make a good scheduler is to schedule one note ahead of time, and to synchronize it to the Web Audio clock. Unfortunately, it's easier said than done. Your scheduler function ends up looking something like this:
 
 ```javascript
-while (nextNoteTime < audioContext.currentTime + scheduleAheadTime ) {
+while (nextNoteTime < currentTime + scheduleAheadTime ) {
   scheduleNote( current16thNote, nextNoteTime );
   nextNote();
 }
@@ -156,12 +156,35 @@ if (rhythmIndex == LOOP_LENGTH) {
 
 This variable simply represents where you are in the context of the loop, and resets when the sequence reaches then end so that it loops. 
 
-Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in [this StackOverflow](http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api), synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, this is only important if you want to synchronize animations to Web Audio. For that, you can read the last section in [A Tale of Two Clocks](http://www.html5rocks.com/en/tutorials/audio/scheduling/).
+Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in [this StackOverflow](http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api), synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, it's simple to fix this. You can replace
+
+```javascript
+timeoutId = setTimeout("schedule()", 0);
+```
+
+with
+
+```javascript
+requestId = requestAnimationFrame(schedule());
+```
+
+and
+
+```javascript
+clearTimeout(timeoutId);
+```
+
+with
+
+```javascript
+cancelAnimationFrame(requestId);
+```
+
+requestAnimationFrame is awesome because the browser choses the frame rate based on the other tasks it is handling, and therefore the rate is more consistent, and if the current tab loses focus, requestAnimationFrame will stop running.
 
 If you've got this scheduling thing down, and want to learn how to integrate it into our own application, I recommend checking out my code at [Github](https://github.com/catarak/web-audio-sequencer) to see how I did it.
 
 Thanks for reading, and look out for a part two of this blog post, which will explain more in depth about **audio routing graphs**, and different types of nodes, i.e. how to add different types of effects. 
-
 
 
 
