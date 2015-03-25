@@ -81,7 +81,12 @@ But scheduleAheadTime and nextNoteTime have to be tweaked according to your use 
 function handlePlay(event) {
     noteTime = 0.0;
     startTime = context.currentTime + 0.005;
+    rhythmIndex = 0;
     schedule();
+}
+
+function handleStop(event) {
+  clearTimeout(timeoutId);
 }
 
 
