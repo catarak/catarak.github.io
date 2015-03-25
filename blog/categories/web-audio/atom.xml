@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web Audio | Ear to the Bits]]></title>
   <link href="http:///blog/categories/web-audio/atom.xml" rel="self"/>
   <link href="http:///"/>
-  <updated>2015-03-25T00:37:40-04:00</updated>
+  <updated>2015-03-25T00:41:58-04:00</updated>
   <id>http:///</id>
   <author>
     <name><![CDATA[Cassie Tarakajian]]></name>
@@ -87,7 +87,12 @@ function loadSong(url) { // the url can be full path or relative
 <pre><code class="javascript">function handlePlay(event) {
     noteTime = 0.0;
     startTime = context.currentTime + 0.005;
+    rhythmIndex = 0;
     schedule();
+}
+
+function handleStop(event) {
+  clearTimeout(timeoutId);
 }
 
 

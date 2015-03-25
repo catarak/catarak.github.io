@@ -254,10 +254,20 @@
 <span class='line-number'>37</span>
 <span class='line-number'>38</span>
 <span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">handlePlay</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="nx">noteTime</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
 </span><span class='line'>    <span class="nx">startTime</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">rhythmIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'>    <span class="nx">schedule</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">handleStop</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timeoutId</span><span class="p">);</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'>
