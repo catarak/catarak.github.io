@@ -4,7 +4,7 @@
   <title><![CDATA[Ear to the Bits]]></title>
   <link href="http:///atom.xml" rel="self"/>
   <link href="http:///"/>
-  <updated>2015-01-07T17:40:29-05:00</updated>
+  <updated>2015-03-25T00:37:40-04:00</updated>
   <id>http:///</id>
   <author>
     <name><![CDATA[Cassie Tarakajian]]></name>
@@ -803,7 +803,7 @@ The &ldquo;row&rdquo; is the only part of this application that&rsquo;s not obje
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Cool, so now we can play audio. As soon as I figured out how to do this, the first thing I wanted to learn how to do is how to sequence audio events, because that&rsquo;s how you making music: you organize sounds in time. This is a deep, dark rabbit hole. On the <a href="http://www.html5rocks.com/en/tutorials/webaudio/intro/">introduction to Web Audio tutorial</a>, they have an example which synchronizing to the Javascript clock. But this is bad. <em>Very</em> bad. The Javascript clock is not precise, and therefore if you synchronize audio events to it, there will be noticeable latency and stuttering. You must synchronize to the Web Audio clock, which is a signal from an actual hardware crystal (and therefore very precise).</p>
+<p>Cool, so now we can play audio. As soon as I figured out how to do this, the first thing I wanted to learn how to do is how to sequence audio events, because that&rsquo;s how you make music: you organize sounds in time. This is a deep, deep rabbit hole. On the <a href="http://www.html5rocks.com/en/tutorials/webaudio/intro/">introduction to Web Audio tutorial</a>, they have an example which synchronizes to the Javascript clock. But this is bad. <em>Very</em> bad. The Javascript clock is not precise, and therefore if you synchronize audio events to it, there will be noticeable latency and stuttering. You must synchronize to the Web Audio clock, which is a signal from an actual hardware crystal on your computer (and therefore very precise).</p>
 
 <p>Another problem is scheduling. Web Audio has no built in scheduler. Therefore, you have to build your own (or use a library that has one, for example, <a href="https://www.npmjs.org/package/waaclock">WAAClock</a> or <a href="https://github.com/CreateJS/SoundJS">SoundJS</a>). You also have to think how far ahead you want to schedule your audio events. For example, if you have the code (which is synchronized to the Javascript clock)</p>
 
@@ -834,7 +834,7 @@ The &ldquo;row&rdquo; is the only part of this application that&rsquo;s not obje
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">while</span> <span class="p">(</span><span class="nx">nextNoteTime</span> <span class="o">&lt;</span> <span class="nx">audioContext</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">+</span> <span class="nx">scheduleAheadTime</span> <span class="p">)</span> <span class="p">{</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">while</span> <span class="p">(</span><span class="nx">nextNoteTime</span> <span class="o">&lt;</span> <span class="nx">currentTime</span> <span class="o">+</span> <span class="nx">scheduleAheadTime</span> <span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="nx">scheduleNote</span><span class="p">(</span> <span class="nx">current16thNote</span><span class="p">,</span> <span class="nx">nextNoteTime</span> <span class="p">);</span>
 </span><span class='line'>  <span class="nx">nextNote</span><span class="p">();</span>
 </span><span class='line'><span class="p">}</span>
@@ -970,7 +970,35 @@ The &ldquo;row&rdquo; is the only part of this application that&rsquo;s not obje
 
 <p>This variable simply represents where you are in the context of the loop, and resets when the sequence reaches then end so that it loops.</p>
 
-<p>Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in <a href="http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api">this StackOverflow</a>, synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, this is only important if you want to synchronize animations to Web Audio. For that, you can read the last section in <a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">A Tale of Two Clocks</a>.</p>
+<p>Cool, so now we can sequence audio properly! Well, kind of. As is pointed out in <a href="http://stackoverflow.com/questions/20598147/perfect-synchronization-with-web-audio-api">this StackOverflow</a>, synchronizing to the Web Audio clock does not mean that your audio is synchronized to the animation frame refresh rate. However, it&rsquo;s simple to fix this. You can replace</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">timeoutId</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="s2">&quot;schedule()&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>with</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">requestId</span> <span class="o">=</span> <span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">schedule</span><span class="p">());</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timeoutId</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>with</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">cancelAnimationFrame</span><span class="p">(</span><span class="nx">requestId</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>requestAnimationFrame is awesome because the browser choses the frame rate based on the other tasks it is handling, and therefore the rate is more consistent, and if the current tab loses focus, requestAnimationFrame will stop running.</p>
 
 <p>If you&rsquo;ve got this scheduling thing down, and want to learn how to integrate it into our own application, I recommend checking out my code at <a href="https://github.com/catarak/web-audio-sequencer">Github</a> to see how I did it.</p>
 
